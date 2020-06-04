@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="post_form_view" model="ir.ui.view">
+            <field name="name">post.form.view</field>
+            <field name="model">oks.intranet.post</field>
+            <field name="arch" type="xml">
+                <form string="Nuevo post">
+                    <sheet>
+                        <group>
+                                <field name="name"/>
+                                <field name="category"/>
+                                <field name="image" widget="many2many_binary"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="post_kanban_view" model="ir.ui.view">
+            <field name="name">post.kanban.view</field>
+            <field name="model">oks.intranet.post</field>
+            <field name="arch" type="xml">
+               <kanban>
+                    <field name="name"/>
+                    <field name="category"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_global_click">
+                                <div class="o_kanban_image">
+                                    <img t-att-src="kanban_image('oks.intranet.post', 'image_medium', record.image)"/>
+                                </div>
+                            </div>             
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+    </data>
+</odoo>

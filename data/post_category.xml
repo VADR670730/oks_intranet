@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="post_cat_festivity" model="oks.intranet.post.category">
+            <field name="name">Festividades</field>
+        </record>
+    </data>
+</odoo>

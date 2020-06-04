@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="intranet_management" model="ir.module.category">
+            <field name="name">Intranet</field>
+            <field name="description">Control access to intranet</field>
+            <field name="sequence" eval="10"/>
+        </record>
+
+        <record id="intranet_user" model="res.groups">
+            <field name="name">User</field>
+            <field name="category_id" ref="intranet_management"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+
+        <record id="base.group_user" model="res.groups">
+            <field name="implied_ids" eval="[(4, ref('intranet_user'))]"></field>
+        </record>
+
+        <record id="intranet_manager" model="res.groups">
+            <field name="name">Manager</field>
+            <field name="category_id" ref="intranet_management"/>
+            <field name="implied_ids" eval="[(4, ref('intranet_user'))]"/>
+        </record>
+
+        <record id="base.user_root" model="res.users">
+            <field name="groups_id" eval="[(4, ref('intranet_manager'))]"/>
+        </record>
+    </data>
+</odoo>
