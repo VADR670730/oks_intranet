@@ -18,10 +18,16 @@
             <field name="view_mode">list,form</field>
         </record>
 
+        <record id="doc_action" model="ir.actions.act_window">
+            <field name="name">Documentos</field>
+            <field name="res_model">oks.intranet.document</field>
+            <field name="view_type">form</field>
+
+
         <menuitem name="Intranet"
             id="intranet_root_menu"
             parent=""
-            groups="intranet_user"
+            groups="oks_intranet.intranet_user"
             sequence="0"
         />
 
@@ -29,7 +35,7 @@
             name="Noticias"
             parent="intranet_root_menu"
             sequence="2"
-            groups="intranet_user"
+            groups="oks_intranet.intranet_user"
         />
 
         <menuitem id="post_menu"
@@ -37,7 +43,7 @@
             parent="post_menu_root"
             action="post_action"
             sequence="4"
-            groups="intranet_user"
+            groups="oks_intranet.intranet_user"
         />
 
         <menuitem id="post_cat_menu"
@@ -45,7 +51,7 @@
             parent="post_menu_root"
             action="cat_action"
             sequence="4"
-            groups="intranet_manager"
+            groups="oks_intranet.intranet_manager"
         />
 
         <menuitem id="photo_kanban_menu"
@@ -53,7 +59,7 @@
             parent="intranet_root_menu"
             action=""
             sequence="4"
-            groups="intranet_user"
+            groups="oks_intranet.intranet_user"
         />
 
         <menuitem id="doc_kanban_menu"
@@ -61,7 +67,7 @@
             parent="intranet_root_menu"
             action=""
             sequence="4"
-            groups="intranet_user"
+            groups="oks_intranet.intranet_user"
         />
 
         <menuitem id="manual_kanban_menu"
@@ -69,7 +75,7 @@
             parent="intranet_root_menu"
             action=""
             sequence="4"
-            groups="intranet_user"
+            groups="oks_intranet.intranet_user"
         />
     </data>
 </odoo>

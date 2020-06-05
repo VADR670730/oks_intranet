@@ -1,3 +1,5 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_intranet_post,oks_intranet.oks_intranet_post,model_oks_intranet_post,intranet_user,1,0,0,0
-access_intranet_post,oks_intranet.oks_intranet_post,model_oks_intranet_post,intranet_manager,1,1,1,1
+intranet_post_user,Read intranet posts,model_oks_intranet_post,intranet_user,1,0,0,0
+intranet_cat_user,Read categories,model_oks_intranet_post_category,intranet_user,1,0,0,0
+intranet_post_manager,Modify intranet posts,model_oks_intranet_post,intranet_manager,1,1,1,1
+intranet_cat_manager, Modify post categories,model_oks_intranet_post,intranet_manager,1,1,1,1

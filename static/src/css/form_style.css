@@ -1,9 +1,9 @@
-.oks_item-per-row {
+.oks_item_per_row {
     display: flex;
     flex-wrap: wrap;
 }
 
-.oks_item-per-row > * {
+.oks_item_per_row > * {
     flex-basis: 100%;
 }
 
@@ -13,4 +13,10 @@
 
 .oks_form_body {
     font-size: 1.5em;
+}
+
+.oks_center_img {
+    align-content: center;
+    display: flex;
+    justify-content: center;
 }
