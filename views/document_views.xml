@@ -1,6 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-        
-    </data>
+        <record id="document_form_view" model="ir.ui.view">
+            <field name="name">document.form.view</field>
+            <field name="model">oks.intranet.document</field>
+            <field name="arch" type="xml">
+                <form>
+                </form>
+            </field>
+        </record>
+
+        <record id="document_tree_view" model="ir.ui.view">
+            <field name="name">document.tree.view</field>
+            <field name="model">oks.intranet.document</field>
+            <field name="arch" type="xml">
+                <tree>
+                </tree>
+            </field>
+        </record>
+
+        <record id="document_cat_form_view" model="ir.ui.view">
+            <field name="name">document.category.form.view</field>
+            <field name="model">oks.intranet.document.category</field>
+            <field name="arch" type="xml">
+                <form>
+                    <div class="oks_item_per_row">
+                        <div class="oks_form_header oks_item_per_row">
+                            <field name="name"/>
+                        </div>
+                        <field name="groups" domain=""/>
+                    </div>
+                </form>
+            </field>
+        </record>
+    </data>       
 </odoo>

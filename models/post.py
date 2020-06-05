@@ -1,7 +1,8 @@
-from odoo import models, fields, api
+from odoo import models, fields, api # pylint: disable=import-error
 
 class IntranetPost(models.Model):
     _name = "oks.intranet.post"
+    _description = "Comunicado o notica de la intranet"
 
     @api.model
     def _get_today_date(self):

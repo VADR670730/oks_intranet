@@ -11,17 +11,26 @@
             </field>
         </record>
 
-        <record id="cat_action" model="ir.actions.act_window">
+        <record id="post_cat_action" model="ir.actions.act_window">
             <field name="name">Categorias</field>
             <field name="res_model">oks.intranet.post.category</field>
             <field name="view_type">form</field>
-            <field name="view_mode">list,form</field>
+            <field name="view_mode">tree,form</field>
         </record>
 
         <record id="doc_action" model="ir.actions.act_window">
             <field name="name">Documentos</field>
             <field name="res_model">oks.intranet.document</field>
             <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record id="doc_cat_action" model="ir.actions.act_window">
+            <field name="name">Categorias</field>
+            <field name="res_model">oks.intranet.document.category</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
 
 
         <menuitem name="Intranet"
@@ -49,7 +58,7 @@
         <menuitem id="post_cat_menu"
             name="Categorias"
             parent="post_menu_root"
-            action="cat_action"
+            action="post_cat_action"
             sequence="4"
             groups="oks_intranet.intranet_manager"
         />
@@ -62,18 +71,25 @@
             groups="oks_intranet.intranet_user"
         />
 
-        <menuitem id="doc_kanban_menu"
+        <menuitem id="doc_menu_root"
             name="Documentos"
             parent="intranet_root_menu"
-            action=""
+            sequence="2"
+            groups="oks_intranet.intranet_user"
+        />        
+
+        <menuitem id="doc_menu"
+            name="Documentos"
+            parent="doc_menu_root"
+            action="doc_action"
             sequence="4"
             groups="oks_intranet.intranet_user"
         />
 
-        <menuitem id="manual_kanban_menu"
-            name="Manuales"
-            parent="intranet_root_menu"
-            action=""
+        <menuitem id="doc_cat_menu"
+            name="Categorias"
+            parent="doc_menu_root"
+            action="doc_cat_action"
             sequence="4"
             groups="oks_intranet.intranet_user"
         />

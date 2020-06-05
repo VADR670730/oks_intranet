@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="document_cat_commercial" model="oks.intranet.document.category">
+            <field name="name">Comercial</field>
+        </record>
+        
+        <record id="document_cat_administration" model="oks.intranet.document.category">
+            <field name="name">Administración</field>
+        </record>
+
+        <record id="document_cat_ops" model="oks.intranet.document.category">
+            <field name="name">Operaciones</field>
+        </record>
+
+        <record id="document_cat_general" model="oks.intranet.document.category">
+            <field name="name">General</field>
+            <field name=""
+        </record>
+    </data>
+</odoo>

@@ -33,6 +33,7 @@
         'views/document_views.xml',
         'views/intranet_menu.xml',
         'data/post_category.xml',
+        'data/document_category.xml',
     ],
     # only loaded in demonstration mode
     'demo': [],
