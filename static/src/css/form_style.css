@@ -1,0 +1,16 @@
+.oks_item-per-row {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.oks_item-per-row > * {
+    flex-basis: 100%;
+}
+
+.oks_form_header {
+    font-size: 2.5em;
+}
+
+.oks_form_body {
+    font-size: 1.5em;
+}

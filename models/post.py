@@ -7,8 +7,9 @@ class IntranetPost(models.Model):
 
     name = fields.Char(string="Titulo", required=True)
     category = fields.Many2one(string="Categoria", comodel_name="oks.intranet.post.category", required=True)
-    date = fields.Date(string="Publicado", readonly=True)
-    image = fields.Many2many(comodel_name="ir.attachment")
+    description = fields.Char(string="Información")
+    date = fields.Date(string="Publicado", readonly=True, default=fields.Date.today())
+    image = fields.Binary(string="Foto", attachment=True)
     
     @api.model
     def create(self, vals):
@@ -19,3 +20,7 @@ class IntranetPostCategory(models.Model):
     _name = "oks.intranet.post.category"
 
     name = fields.Char()
+
+    _sql_constraints = [
+        ('post_cat_uniq', 'UNIQUE (name)',  'No pueden existir dos categorias iguales')
+    ]

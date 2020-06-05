@@ -28,8 +28,9 @@
     'data': [
         'security/intranet_security.xml',
         'security/ir.model.access.csv',
+        'views/intranet.xml',
         'views/post_views.xml',
-        'views/intranet_menuitem.xml',
+        'views/intranet_menu.xml',
         'data/post_category.xml',
     ],
     # only loaded in demonstration mode
