@@ -8,23 +8,22 @@ class Document(models.Model):
     def _get_today_date(self):
         return fields.Date.today()
 
-    @api.multi
-    def _get_user_group(self):
-        module_id = self.env["ir.module.category"].search([("name", "=", "Intranet")]).id
-        user_id = self.env.user.id
-
-    name = fields.Char(required=True)
-    description = fields.Char()
+    name = fields.Char(string="Nombre", required=True)
+    description = fields.Char(string="Descripción")
     is_manual = fields.Boolean(default=False)
-    user_group = fields.Many2many(comodel_name="res.groups", compute=_get_user_group)
-    allowed_group = fields.Many2many(comodel_name="res.groups", related="category.groups")
+    allowed_groups = fields.Many2many(comodel_name="res.groups", related="category.groups", store=False)
     date = fields.Date(string="Publicado", readonly=True, default=_get_today_date)
-    category = fields.Many2one(comodel_name="oks.intranet.document.category", required=True)
-    document = fields.Binary(attachment=True)
+    category = fields.Many2one(string="Categoria", comodel_name="oks.intranet.document.category", required=True)
+    documents = fields.Many2many(string="Documentos", comodel_name="ir.attachment")
 
 
 class DocumentCategory(models.Model):
     _name = "oks.intranet.document.category"
 
-    name = fields.Char()
-    groups = fields.Many2many("res.groups", required=True)
+    @api.model
+    def _get_category(self):
+        return self.env.ref("oks_intranet.intranet_management").id
+
+    name = fields.Char(required=True)
+    category_id = fields.Many2one(comodel_name="ir.model.category", default=_get_category, store=False)
+    groups = fields.Many2many(comodel_name="res.groups", required=True)

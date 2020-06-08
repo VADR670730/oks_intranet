@@ -8,7 +8,7 @@
                 <form string="Nuevo post">
                     <sheet>
                         <div class="oks_item_per_row">
-                            <div class="oks_form_header">
+                            <div class="oks_form_post_header">
                                 <field name="name"/>
                             </div>
                             <div class="oks_item_per_row oks_form_body">

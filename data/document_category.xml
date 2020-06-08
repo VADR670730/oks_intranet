@@ -3,19 +3,22 @@
     <data>
         <record id="document_cat_commercial" model="oks.intranet.document.category">
             <field name="name">Comercial</field>
+            <field name="groups" eval="[(4, ref('intranet_commercial'))]"/>
         </record>
         
         <record id="document_cat_administration" model="oks.intranet.document.category">
             <field name="name">Administración</field>
+             <field name="groups" eval="[(4, ref('intranet_administration'))]"/>
         </record>
 
         <record id="document_cat_ops" model="oks.intranet.document.category">
             <field name="name">Operaciones</field>
+             <field name="groups" eval="[(4, ref('intranet_operations'))]"/>
         </record>
 
         <record id="document_cat_general" model="oks.intranet.document.category">
             <field name="name">General</field>
-            <field name=""
+            <field name="groups" eval="[(4, ref('intranet_user'))]"/>
         </record>
     </data>
 </odoo>

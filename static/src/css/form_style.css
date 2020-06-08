@@ -7,7 +7,7 @@
     flex-basis: 100%;
 }
 
-.oks_form_header {
+.oks_form_post_header {
     font-size: 2.5em;
 }
 
@@ -19,4 +19,13 @@
     align-content: center;
     display: flex;
     justify-content: center;
+}
+
+.oks_doc {
+    margin: auto;
+    max-width: 500px;
+}
+
+.oks_form_doc_header {
+    font-size: 1.5em;
 }

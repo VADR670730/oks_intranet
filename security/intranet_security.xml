@@ -26,5 +26,22 @@
         <record id="base.user_root" model="res.users">
             <field name="groups_id" eval="[(4, ref('intranet_manager'))]"/>
         </record>
+        <!--
+            Groups used when filtering out readable documents with domains
+        -->
+        <record id="intranet_commercial" model="res.groups">
+            <field name="name">Comercial</field>
+            <field name="category_id" ref="intranet_management"/>
+        </record>
+
+        <record id="intranet_operations" model="res.groups">
+            <field name="name">Operaciones</field>
+            <field name="category_id" ref="intranet_management"/>
+        </record>
+
+        <record id="intranet_administration" model="res.groups">
+            <field name="name">Administración</field>
+            <field name="category_id" ref="intranet_management"/>
+        </record>
     </data>
 </odoo>

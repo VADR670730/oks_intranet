@@ -6,6 +6,23 @@
             <field name="model">oks.intranet.document</field>
             <field name="arch" type="xml">
                 <form>
+                    <sheet>
+                        <div class="oks_item_per_row">
+                            <div class="oks_item_per_row oks_form_doc_header">
+                                <group>
+                                    <field name="name"/>
+                                    <field name="category" groups="oks_intranet.intranet_manager"/>
+                                    <field name="date"/>
+                                </group>
+                            </div>
+                            <div class="oks_item_per_row">
+                                <group>
+                                    <field name="description"/>
+                                    <field name="documents" widget="many2many_binary"/>
+                                </group>
+                            </div>
+                        </div>
+                    </sheet>
                 </form>
             </field>
         </record>
@@ -15,6 +32,10 @@
             <field name="model">oks.intranet.document</field>
             <field name="arch" type="xml">
                 <tree>
+                    <field name="name"/>
+                    <field name="description"/>
+                    <field name="date"/>
+                    <field name="category" groups="oks_intranet.intranet_manager"/>
                 </tree>
             </field>
         </record>
@@ -24,12 +45,15 @@
             <field name="model">oks.intranet.document.category</field>
             <field name="arch" type="xml">
                 <form>
-                    <div class="oks_item_per_row">
-                        <div class="oks_form_header oks_item_per_row">
-                            <field name="name"/>
+                    <sheet>
+                        <div class="oks_item_per_row">
+                            <group>
+                                <field name="name"/>
+                            </group>
+                            <field name="category_id" invisible="1"/>
+                            <field name="groups" domain="[('category_id', '=', category_id)]"/>
                         </div>
-                        <field name="groups" domain=""/>
-                    </div>
+                    </sheet>
                 </form>
             </field>
         </record>
