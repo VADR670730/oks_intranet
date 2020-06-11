@@ -1,5 +1,9 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 intranet_post_user,Read intranet posts,model_oks_intranet_post,intranet_user,1,0,0,0
-intranet_cat_user,Read categories,model_oks_intranet_post_category,intranet_user,1,0,0,0
+intranet_post_cat_user,Read categories,model_oks_intranet_post_category,intranet_user,1,0,0,0
 intranet_post_manager,Modify intranet posts,model_oks_intranet_post,intranet_manager,1,1,1,1
-intranet_cat_manager, Modify post categories,model_oks_intranet_post,intranet_manager,1,1,1,1
+intranet_post_cat_manager, Modify post categories,model_oks_intranet_post,intranet_manager,1,1,1,1
+intranet_doc_user,Read intranet documents,model_oks_intranet_document,intranet_user,1,0,0,0
+intranet_doc_manager,Modify intranet documents,model_oks_intranet_document,intranet_manager,1,1,1,1
+intranet_doc_cat_user,Read document categories,model_oks_intranet_document_category,intranet_user,1,0,0,0
+intranet_doc_cat_manager,Modify intranet cateogires,model_oks_intranet_document_category,intranet_manager,1,1,1,1

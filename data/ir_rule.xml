@@ -4,7 +4,7 @@
         <record id="document_access" model="ir.rule">
             <field name="name">Documentos solo de sus categorias</field>
             <field  name="model_id" ref="model_oks_intranet_document"/>
-            <field name="domain_force">[('allowed_groups'.ids, 'in', user.groups_id.ids)]</field>
+            <field name="domain_force">[('allowed_groups', 'in', user.groups_id.ids)]</field>
         </record>
     </data>
 </odoo>

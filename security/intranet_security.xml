@@ -17,17 +17,8 @@
             <field name="implied_ids" eval="[(4, ref('intranet_user'))]"></field>
         </record>
 
-        <record id="intranet_manager" model="res.groups">
-            <field name="name">Manager</field>
-            <field name="category_id" ref="intranet_management"/>
-            <field name="implied_ids" eval="[(4, ref('intranet_user'))]"/>
-        </record>
-
-        <record id="base.user_root" model="res.users">
-            <field name="groups_id" eval="[(4, ref('intranet_manager'))]"/>
-        </record>
         <!--
-            Groups used when filtering out readable documents with domains
+           / Groups used when filtering out readable documents with domains
         -->
         <record id="intranet_commercial" model="res.groups">
             <field name="name">Comercial</field>
@@ -42,6 +33,19 @@
         <record id="intranet_administration" model="res.groups">
             <field name="name">Administración</field>
             <field name="category_id" ref="intranet_management"/>
+        </record>
+        <!--
+            Groups used when filtering out readable documents with domains /
+        -->
+
+        <record id="intranet_manager" model="res.groups">
+            <field name="name">Manager</field>
+            <field name="category_id" ref="intranet_management"/>
+            <field name="implied_ids" eval="[(6, 0, [ref('intranet_user'), ref('intranet_commercial'), ref('intranet_administration'), ref('intranet_operations')])]"/>
+        </record>
+
+        <record id="base.user_root" model="res.users">
+            <field name="groups_id" eval="[(4, ref('intranet_manager'))]"/>
         </record>
     </data>
 </odoo>

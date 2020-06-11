@@ -17,12 +17,31 @@
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
         </record>
+        
+        <record id="photo_action" model="ir.actions.act_window">
+            <field name="name">Fotos</field>
+            <field name="res_model">oks.intranet.document</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">kanban,form</field>
+            <field name="domain">[('is_album', '=', True)]</field>
+            <field name="context">{'default_is_album': True}</field>
+        </record>
 
         <record id="doc_action" model="ir.actions.act_window">
             <field name="name">Documentos</field>
             <field name="res_model">oks.intranet.document</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
+            <field name="domain">['&amp;', ('is_album', '=', False), ('is_manual', '=', False)]</field>
+        </record>
+
+        <record id="manual_action" model="ir.actions.act_window">
+            <field name="name">Manuales</field>
+            <field name="res_model">oks.intranet.document</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('is_manual', '=', True)]</field>
+            <field name="context">{'default_is_manual': True}</field>
         </record>
 
         <record id="doc_cat_action" model="ir.actions.act_window">
@@ -63,11 +82,11 @@
             groups="oks_intranet.intranet_manager"
         />
 
-        <menuitem id="photo_kanban_menu"
+        <menuitem id="photo_menu"
             name="Fotos"
             parent="intranet_root_menu"
-            action=""
-            sequence="4"
+            action="photo_action"
+            sequence="2"
             groups="oks_intranet.intranet_user"
         />
 
@@ -86,12 +105,20 @@
             groups="oks_intranet.intranet_user"
         />
 
+        <menuitem id="manual_menu"
+            name="Manuales"
+            parent="doc_menu_root"
+            action="manual_action"
+            sequence="4"
+            groups="oks_intranet.intranet_user"
+        />
+
         <menuitem id="doc_cat_menu"
             name="Categorias"
             parent="doc_menu_root"
             action="doc_cat_action"
             sequence="4"
-            groups="oks_intranet.intranet_user"
+            groups="oks_intranet.intranet_manager"
         />
     </data>
 </odoo>
