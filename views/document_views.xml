@@ -58,9 +58,11 @@
                                     <field name="name"/>
                                 </span>
                                 <div class="oks_kanban_info oks_item_per_row">
-                                    <span>Descripción: 
-                                        <field name="description"/>
-                                    </span>
+                                    <t t-if="description">
+                                        <span>Descripción: 
+                                            <field name="description"/>
+                                        </span>
+                                    </t>
                                     <span>Fecha: 
                                         <field name="date"/>
                                     </span>

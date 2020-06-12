@@ -14,13 +14,12 @@
                             <div class="oks_item_per_row oks_form_body">
                                 <field name="dev_view" invisible="1"/>
                                 <field name="category_name" attrs="{'invisible': [('dev_view', '=', True)]}"/>
+                                <span groups="oks_intranet.intranet_manager">Categoria:</span>
                                 <field name="category" attrs="{'invisible': [('dev_view', '=', False)]}"/>
                                 <field name="date"/>
-                                <span groups="oks_intranet.intranet_manager">Descripción: 
-                                </span>
+                                <span groups="oks_intranet.intranet_manager">Descripción:</span>
                                 <field name="description"/>
-                                <span groups="oks_intranet.intranet_manager">Imagen: 
-                                </span>
+                                <span groups="oks_intranet.intranet_manager">Imagen:</span>
                                 <div class="oks_center_img">
                                     <field name="image" widget="image"/>
                                 </div>
