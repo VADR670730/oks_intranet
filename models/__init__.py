@@ -2,4 +2,4 @@
 
 from . import post
 from . import document
-from . import res_users
+from . import photos
