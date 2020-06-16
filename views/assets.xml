@@ -4,6 +4,7 @@
         <xpath expr="." position="inside">
             <link rel="stylesheet" href="/oks_intranet/static/src/css/kanban_style.css"/>
             <link rel="stylesheet" href="/oks_intranet/static/src/css/form_style.css"/>
+            <script type="text/javascript" src="/oks_intranet/static/src/js/oks_intranet_photos.js"></script>
         </xpath>
     </template>
 </odoo>

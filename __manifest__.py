@@ -28,7 +28,7 @@
     'data': [
         'security/intranet_security.xml',
         'security/ir.model.access.csv',
-        'views/intranet.xml',
+        'views/assets.xml',
         'views/post_views.xml',
         'views/document_views.xml',
         'views/photos_views.xml',
@@ -36,6 +36,9 @@
         'data/post_category.xml',
         'data/document_category.xml',
         'data/ir_rule.xml',
+    ],
+    'qweb': [
+        "static/src/xml/oks_intranet_photos.xml",
     ],
     # only loaded in demonstration mode
     'demo': [],

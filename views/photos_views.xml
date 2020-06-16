@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
+        <record id="photo_preview_action" model="ir.actions.client">
+            <field name="name">oks.photos.preview</field>
+            <field name="tag">oks_photos_preview</field>
+        </record>
+
         <record id="photos_form_view" model="ir.ui.view">
             <field name="name">photos.form.view</field>
             <field name="model">oks.intranet.photos</field>
@@ -20,11 +25,7 @@
                                     <field name="documents" widget="many2many_binary"/>
                                 </group>
                             </div>
-                            <div class="oks_photo_preview">
-                                <field name="display_img" widget="image"/>
-                                <button name="action_img_back" string="Atras" type="object"/>
-                                <button name="action_img_next" string="Siguiente" type="object"/>
-                            </div>
+                            <button name="%(oks_intranet.photo_preview_action)d" string="Vista previa" type="action" class="oe_highlight"/>
                         </div>
                     </sheet>
                 </form>

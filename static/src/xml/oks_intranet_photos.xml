@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="oks_intranet.PhotoPreview">
+        <div class="oks_photo_preview">
+            <button>Atras</button>
+            <button>Siguiente</button>
+        </div>
+    </t>
+</templates>
