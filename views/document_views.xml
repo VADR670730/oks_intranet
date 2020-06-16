@@ -9,11 +9,9 @@
                     <sheet>
                         <div class="oks_item_per_row">
                             <div class="oks_item_per_row oks_form_doc_header">
-                                <field name="is_album" invisible="1"/>
                                 <group>
                                     <field name="name"/>
-                                    <field name="category" attrs="{'invisible': [('is_album', '=', True)]}"/>
-                                    <field name="category_name" attrs="{'invisible': [('is_album', '=', False)]}"/>
+                                    <field name="category_name"/>
                                     <field name="date"/>
                                 </group>
                             </div>
@@ -42,38 +40,6 @@
             </field>
         </record>
         
-        <record id="photo_kanban_view" model="ir.ui.view">
-            <field name="name">document.photo.tree.view</field>
-            <field name="model">oks.intranet.document</field>
-            <field name="arch" type="xml">
-                <kanban>
-                    <field name="id"/>
-                    <field name="name"/>
-                    <field name="description"/>
-                    <field name="date"/>
-                    <templates>
-                        <t t-name="kanban-box">
-                            <div class="oe_kanban_global_click oks_kanban_post oks_item_per_row">
-                                <span class="oks_kanban_title">
-                                    <field name="name"/>
-                                </span>
-                                <div class="oks_kanban_info oks_item_per_row">
-                                    <t t-if="description">
-                                        <span>Descripción: 
-                                            <field name="description"/>
-                                        </span>
-                                    </t>
-                                    <span>Fecha: 
-                                        <field name="date"/>
-                                    </span>
-                                </div>
-                            </div>             
-                        </t>
-                    </templates>
-                </kanban>
-            </field>
-        </record>
-
         <record id="document_cat_form_view" model="ir.ui.view">
             <field name="name">document.category.form.view</field>
             <field name="model">oks.intranet.document.category</field>

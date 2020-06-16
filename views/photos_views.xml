@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="photos_form_view" model="ir.ui.view">
+            <field name="name">photos.form.view</field>
+            <field name="model">oks.intranet.photos</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <div class="oks_item_per_row">
+                            <div class="oks_item_per_row oks_form_doc_header">
+                                <group>
+                                    <field name="name"/>
+                                    <field name="date"/>
+                                </group>
+                            </div>
+                            <div class="oks_item_per_row">
+                                <group>
+                                    <field name="description"/>
+                                    <field name="documents" widget="many2many_binary"/>
+                                </group>
+                            </div>
+                            <div class="oks_photo_preview">
+                                <field name="display_img" widget="image"/>
+                                <button name="action_img_back" string="Atras" type="object"/>
+                                <button name="action_img_next" string="Siguiente" type="object"/>
+                            </div>
+                        </div>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="photos_kanban_view" model="ir.ui.view">
+            <field name="name">photos.kanban.view</field>
+            <field name="model">oks.intranet.photos</field>
+            <field name="arch" type="xml">
+               <kanban>
+                    <field name="id"/>
+                    <field name="name"/>
+                    <field name="date"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_global_click oks_kanban_post oks_item_per_row">
+                                <span class="oks_kanban_title">
+                                    <field name="name"/>
+                                </span>
+                                <div class="oks_kanban_info oks_item_per_row">
+                                    <span>Fecha: 
+                                        <field name="date"/>
+                                    </span>
+                                    <field name="description"/>
+                                </div>
+                            </div>             
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+    </data>
+</odoo>
