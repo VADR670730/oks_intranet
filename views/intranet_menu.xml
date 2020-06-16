@@ -20,21 +20,23 @@
         
         <record id="photo_action" model="ir.actions.act_window">
             <field name="name">Fotos</field>
-            <field name="res_model">oks.intranet.photos</field>
+            <field name="res_model">oks.intranet.document</field>
             <field name="view_type">form</field>
             <field name="view_mode">kanban,form</field>
+            <field name="domain">[('is_album', '=', True)]</field>
+            <field name="context">{'default_is_album': True}</field>
         </record>
 
         <record id="doc_action" model="ir.actions.act_window">
-            <field name="name">Formatos</field>
+            <field name="name">Documentos</field>
             <field name="res_model">oks.intranet.document</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
-            <field name="domain">[('is_manual', '=', False)]</field>
+            <field name="domain">['&amp;', ('is_album', '=', False), ('is_manual', '=', False)]</field>
         </record>
 
         <record id="manual_action" model="ir.actions.act_window">
-            <field name="name">Documentación interna</field>
+            <field name="name">Manuales</field>
             <field name="res_model">oks.intranet.document</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
@@ -48,6 +50,7 @@
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
         </record>
+
 
         <menuitem name="Intranet"
             id="intranet_root_menu"
@@ -103,7 +106,7 @@
         />
 
         <menuitem id="manual_menu"
-            name="Documentación interna"
+            name="Manuales"
             parent="doc_menu_root"
             action="manual_action"
             sequence="4"

@@ -31,7 +31,6 @@
         'views/intranet.xml',
         'views/post_views.xml',
         'views/document_views.xml',
-        'views/photos_views.xml',
         'views/intranet_menu.xml',
         'data/post_category.xml',
         'data/document_category.xml',
