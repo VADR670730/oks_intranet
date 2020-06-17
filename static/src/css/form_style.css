@@ -29,3 +29,14 @@
 .oks_form_doc_header {
     font-size: 1.5em;
 }
+
+.oks_img_btn_div {
+    align-items: center;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+}
+
+.oks_img_btn_div > button {
+    margin: 10px;
+}

@@ -12,7 +12,7 @@
             <field name="arch" type="xml">
                 <form>
                     <sheet>
-                        <div class="oks_item_per_row">
+                        <div class="oks_item_per_row" id="oks_container">
                             <div class="oks_item_per_row oks_form_doc_header">
                                 <group>
                                     <field name="name"/>
@@ -25,7 +25,7 @@
                                     <field name="documents" widget="many2many_binary"/>
                                 </group>
                             </div>
-                            <button name="%(oks_intranet.photo_preview_action)d" string="Vista previa" type="action" class="oe_highlight"/>
+                            <widget name="oks_intranet_img_prev"/>
                         </div>
                     </sheet>
                 </form>
