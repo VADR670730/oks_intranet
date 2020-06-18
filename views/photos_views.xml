@@ -12,6 +12,7 @@
             <field name="arch" type="xml">
                 <form>
                     <sheet>
+                        <field name="id" invisible="1"/>
                         <div class="oks_item_per_row" id="oks_container">
                             <div class="oks_item_per_row oks_form_doc_header">
                                 <group>

@@ -10,6 +10,7 @@ class Document(models.Model):
 
     name = fields.Char(string="Nombre", required=True)
     description = fields.Char(string="Descripción")
+    user_in_charge = fields.Many2one(string="Encargado", comodel_name="hr.employee", required=True)
     is_manual = fields.Boolean(string="Es manual", default=False)
     allowed_groups = fields.Many2many(comodel_name="res.groups", related="category.groups", store=False)
     date = fields.Date(string="Publicado", readonly=True, default=_get_today_date)

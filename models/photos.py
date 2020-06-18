@@ -14,16 +14,20 @@ class Photos(models.Model):
     def _default_category(self):
         return self.env.ref("oks_intranet.document_cat_general")
 
-    @api.multi
-    def get_doc_len(self):
-        for record in self:
-            return len(record.documents)
+    @api.model
+    def get_doc_len(self, id):
+        res = self.env["oks.intranet.photos"].search([("id", "=", id)])[0]
+        return len(res.documents)
+
 
     @api.model
-    def get_img64(self, index):
-        size = len(self.documents)
+    def get_img64(self, id, index):
+        res = self.env["oks.intranet.photos"].search([("id", "=", id)])[0]
+        size = len(res.documents)
         if size > 0 and index < size:
-            return self.documents[index].datas 
+            return res.documents[index].datas 
+        else:
+            return -1
 
     category = fields.Many2one(string="Categoria", comodel_name="oks.intranet.document.category", required=True, default=_default_category)
     thumbnail = fields.Binary(compute=_default_thumbnail, store=True)

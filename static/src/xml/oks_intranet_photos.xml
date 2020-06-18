@@ -6,7 +6,8 @@
                 <button id="oks_back_btn">Atras</button>
                 <button>Siguiente</button>
             </div>
-            <div id="oks_intranet_img_div"></div>
+            <div id="oks_intranet_img_div">
+            </div>
         </div>
     </t>
 </templates>

@@ -5,7 +5,7 @@
             <field name="name">post.form.view</field>
             <field name="model">oks.intranet.post</field>
             <field name="arch" type="xml">
-                <form string="Nuevo post">
+                <form>
                     <sheet>
                         <div class="oks_item_per_row">
                             <div class="oks_form_post_header">
@@ -33,6 +33,7 @@
         <record id="post_kanban_view" model="ir.ui.view">
             <field name="name">post.kanban.view</field>
             <field name="model">oks.intranet.post</field>
+             <field name="priority" eval="1"/>
             <field name="arch" type="xml">
                <kanban>
                     <field name="id"/>
@@ -58,6 +59,20 @@
                         </t>
                     </templates>
                 </kanban>
+            </field>
+        </record>
+
+        <record id="post_tree_view" model="ir.ui.view">
+            <field name="name">post.tree.view</field>
+            <field name="model">oks.intranet.post</field>
+            <field name="priority" eval="2"/>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="category"/>
+                    <field name="description"/>
+                    <field name="date"/>
+                </tree>
             </field>
         </record>
     </data>

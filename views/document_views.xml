@@ -11,12 +11,13 @@
                             <div class="oks_item_per_row oks_form_doc_header">
                                 <group>
                                     <field name="name"/>
-                                    <field name="category_name"/>
+                                    <field name="category"/>
                                     <field name="date"/>
                                 </group>
                             </div>
                             <div class="oks_item_per_row">
                                 <group>
+                                    <field name="user_in_charge"/>
                                     <field name="description"/>
                                     <field name="documents" widget="many2many_binary"/>
                                 </group>
@@ -33,6 +34,7 @@
             <field name="arch" type="xml">
                 <tree>
                     <field name="name"/>
+                    <field name="user_in_charge"/>
                     <field name="description"/>
                     <field name="date"/>
                     <field name="category"/>

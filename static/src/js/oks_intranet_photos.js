@@ -4,23 +4,41 @@ odoo.define("oks_intranet.Photos", function(require) {
 
     var Widget= require('web.Widget');
     var widgetRegistry = require('web.widget_registry');
-    var FieldManagerMixin = require('web.FieldManagerMixin');
-    var rpc = require("web.ajax");
 
-    var MyWidget = Widget.extend(FieldManagerMixin, {
+    var MyWidget = Widget.extend({
         template: "oks_intranet.PhotoPreview",
-        init: function (parent, model, state) {
+        init: function (parent) {
             this._super(parent);
-            FieldManagerMixin.init.call(this);
+            this.index = 0;
         },
         start: function () {
-            var imgDiv = this.$("#oks_intranet_img_div");
+            self = this;
+            setTimeout(function() { 
+                self.imgDiv = this.$("#oks_intranet_img_div");
+                self.recordId = this.$("span[name='id']").text();
+                self.update_count();
+            }, 1000); 
         },
         events: {
             "click #oks_back_btn": "back-evt",
         },
         "back-evt": function() {},
         "next-evt": function() {},
+        
+        update_count: function() {
+            self = this;
+            self._rpc({
+                model: 'oks.intranet.photos',
+                method: 'get_doc_len',
+                args: [self.recordId]
+                }).then(function (returned_value) { 
+                    self.imgCount = returned_value; 
+                });
+        },
+
+        display_image: function(index) {
+            
+        },
     });
 
     widgetRegistry.add(
