@@ -16,28 +16,24 @@ odoo.define("oks_intranet.Photos", function(require) {
             setTimeout(function() { 
                 self.imgDiv = this.$("#oks_intranet_img_div");
                 self.recordId = this.$("span[name='id']").text();
-                self.update_count();
-            }, 1000); 
+                self._rpc({model: "oks.intranet.photos", method: "get_img64", args: [self.recordId, 0]}).then(function(returned_value) {
+                    var img = $("<img />")
+                    img.attr("src", "data:image/png;base64, " + returned_value);
+                    img.appendTo(self.imgDiv);
+                });
+            }, 150); 
         },
         events: {
             "click #oks_back_btn": "back-evt",
+            "click #oks_next_btn": "next-evt",
         },
-        "back-evt": function() {},
-        "next-evt": function() {},
-        
-        update_count: function() {
-            self = this;
-            self._rpc({
-                model: 'oks.intranet.photos',
-                method: 'get_doc_len',
-                args: [self.recordId]
-                }).then(function (returned_value) { 
-                    self.imgCount = returned_value; 
-                });
+        "back-evt": function() {
+            this.index++;
+            console.log(this.index);
         },
-
-        display_image: function(index) {
-            
+        "next-evt": function() {
+            this.index++;
+            console.log(this.index);
         },
     });
 

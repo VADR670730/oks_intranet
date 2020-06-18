@@ -50,7 +50,7 @@
             <field name="view_mode">tree,form</field>
         </record>
 
-        <menuitem name="Intranet"
+        <menuitem name="One Key News"
             id="intranet_root_menu"
             parent=""
             groups="oks_intranet.intranet_user"
@@ -93,20 +93,20 @@
             parent="intranet_root_menu"
             sequence="2"
             groups="oks_intranet.intranet_user"
-        />        
+        />      
+
+        <menuitem id="manual_menu"
+            name="Normatividad interna"
+            parent="doc_menu_root"
+            action="manual_action"
+            sequence="4"
+            groups="oks_intranet.intranet_user"
+        />  
 
         <menuitem id="doc_menu"
             name="Formatos"
             parent="doc_menu_root"
             action="doc_action"
-            sequence="4"
-            groups="oks_intranet.intranet_user"
-        />
-
-        <menuitem id="manual_menu"
-            name="Documentación interna"
-            parent="doc_menu_root"
-            action="manual_action"
             sequence="4"
             groups="oks_intranet.intranet_user"
         />

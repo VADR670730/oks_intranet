@@ -4,7 +4,7 @@
         <div class="oks_item_per_row">
             <div class="oks_img_btn_div">
                 <button id="oks_back_btn">Atras</button>
-                <button>Siguiente</button>
+                <button id="oks_next_btn">Siguiente</button>
             </div>
             <div id="oks_intranet_img_div">
             </div>
