@@ -1,0 +1,22 @@
+#oks_img_btn_div {
+    align-items: center;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+}
+
+#oks_img_btn_div > button {
+    margin: 10px;
+}
+
+#oks_intranet_img_div {
+    align-items: center;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+}
+
+#oks_intranet_img{
+    max-width: 100%;
+    height: auto;
+}

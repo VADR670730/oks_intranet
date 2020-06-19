@@ -25,9 +25,13 @@ class Photos(models.Model):
         res = self.env["oks.intranet.photos"].search([("id", "=", id)])[0]
         size = len(res.documents)
         if size > 0 and index < size:
-            return res.documents[index].datas 
+            return (res.documents[index].name, res.documents[index].datas)
         else:
             return -1
 
     category = fields.Many2one(string="Categoria", comodel_name="oks.intranet.document.category", required=True, default=_default_category)
     thumbnail = fields.Binary(compute=_default_thumbnail, store=True)
+
+    #Overwrite unused fields inherited from model
+    user_in_charge = fields.Many2one(store=False)
+    is_manual = fields.Boolean(store=False)

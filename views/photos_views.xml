@@ -18,15 +18,15 @@
                                 <group>
                                     <field name="name"/>
                                     <field name="date"/>
-                                </group>
-                            </div>
-                            <div class="oks_item_per_row">
-                                <group>
                                     <field name="description"/>
-                                    <field name="documents" widget="many2many_binary"/>
                                 </group>
                             </div>
                             <widget name="oks_intranet_img_prev"/>
+                            <div class="oks_item_per_row">
+                                <group>
+                                    <field name="documents" widget="many2many_binary" string="Fotos"/>
+                                </group>
+                            </div>
                         </div>
                     </sheet>
                 </form>

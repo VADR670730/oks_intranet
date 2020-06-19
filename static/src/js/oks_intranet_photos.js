@@ -10,30 +10,64 @@ odoo.define("oks_intranet.Photos", function(require) {
         init: function (parent) {
             this._super(parent);
             this.index = 0;
+            this.img = null;
+            this.recordId = null;
+            this.imgLen = null;
+            this.imgSrc = null;
+            this.imgName = null;
         },
-        start: function () {
+        start: async function () {
             self = this;
-            setTimeout(function() { 
-                self.imgDiv = this.$("#oks_intranet_img_div");
+            setTimeout(async function() { //Without this magical timeout the code runs before the view is rendered
+                self.img = this.$("#oks_intranet_img");
                 self.recordId = this.$("span[name='id']").text();
-                self._rpc({model: "oks.intranet.photos", method: "get_img64", args: [self.recordId, 0]}).then(function(returned_value) {
-                    var img = $("<img />")
-                    img.attr("src", "data:image/png;base64, " + returned_value);
-                    img.appendTo(self.imgDiv);
-                });
-            }, 150); 
+                if(!self.recordId) {
+                    this.$("#oks_intranet_img_widget").hide();
+                    return;
+                }
+                await self.img_len();
+                if(self.imgLen <= 0) {
+                    this.$("#oks_intranet_img_widget").hide();
+                    return;
+                }
+                else if(self.imgLen == 1) {
+                    this.$("#oks_img_btn_div").hide();
+                }
+                self.display_img();
+            }, 1); 
         },
         events: {
             "click #oks_back_btn": "back-evt",
             "click #oks_next_btn": "next-evt",
         },
-        "back-evt": function() {
-            this.index++;
-            console.log(this.index);
+        "back-evt": async function() {
+            await this.img_len();
+            this.index--;
+            if(this.index < 0) {
+                this.index = this.imgLen - 1;
+            }
+            this.display_img();
         },
-        "next-evt": function() {
+        "next-evt": async function() {
+            await this.img_len();
             this.index++;
-            console.log(this.index);
+            if(this.index > (this.imgLen - 1)) {
+                this.index = 0;
+            }  
+            this.display_img();
+        },
+        img_len: async function() {
+            this.imgLen = await this._rpc({model: "oks.intranet.photos", method: "get_doc_len", args: [this.recordId]}).then(function(val) {
+                return val;
+            });
+        },
+        display_img: async function() {
+            self = this;
+            await this._rpc({model: "oks.intranet.photos", method: "get_img64", args: [this.recordId, this.index]}).then(function(val) {
+                self.imgName = val[0];
+                self.imgSrc = val[1];
+                self.img.attr("src", "data:image/png;base64, " + self.imgSrc);
+            });
         },
     });
 
