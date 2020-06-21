@@ -27,5 +27,5 @@ class DocumentCategory(models.Model):
         return self.env.ref("oks_intranet.intranet_management").id
 
     name = fields.Char(required=True)
-    category_id = fields.Many2one(comodel_name="ir.model.category", default=_get_category, store=False)
+    category_id = fields.Many2one(comodel_name="ir.module.category", default=_get_category, store=False)
     groups = fields.Many2many(comodel_name="res.groups", required=True)
