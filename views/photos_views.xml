@@ -24,6 +24,7 @@
                             <widget name="oks_intranet_img_prev"/>
                             <div class="oks_item_per_row">
                                 <group>
+                                    <field name="thumbnail" groups="oks_intranet.intranet_manager"/>
                                     <field name="documents" widget="many2many_binary" string="Fotos"/>
                                 </group>
                             </div>
@@ -41,6 +42,7 @@
                     <field name="id"/>
                     <field name="name"/>
                     <field name="date"/>
+                    <field name="thumbnail"/>
                     <templates>
                         <t t-name="kanban-box">
                             <div class="oe_kanban_global_click oks_kanban_post oks_item_per_row">
@@ -53,6 +55,9 @@
                                     </span>
                                     <field name="description"/>
                                 </div>
+                                <t t-if="record.thumbnail.raw_value">
+                                    <img t-att-src="kanban_image('oks.intranet.photos', 'thumbnail', record.id.raw_value)" class="oks_intranet_kanban_img"/>
+                                </t>
                             </div>             
                         </t>
                     </templates>

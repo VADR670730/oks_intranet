@@ -30,7 +30,6 @@ odoo.define("oks_intranet.Photos", function(require) {
         start: async function () {
             self = this;
             setTimeout(async function() { //Without this magical timeout the code runs before the view is rendered
-                self.img = this.$("#oks_intranet_img");
                 self.recordId = this.$("span[name='id']").text();
                 if(!self.recordId) {
                     this.$("#oks_intranet_img_widget").hide();
@@ -44,6 +43,8 @@ odoo.define("oks_intranet.Photos", function(require) {
                 else if(self.imgLen == 1) {
                     this.$("#oks_img_btn_div").hide();
                 }
+                self.img = this.$("#oks_intranet_img");
+                self.imgName = this.$("#oks_intranet_img_name");
                 self.display_img();
             }, 1); 
         },
@@ -75,7 +76,7 @@ odoo.define("oks_intranet.Photos", function(require) {
         display_img: async function() {
             self = this;
             await this._rpc({model: "oks.intranet.photos", method: "get_img64", args: [this.recordId, this.index]}).then(function(val) {
-                self.imgName = val[0];
+                self.imgName.text(val[0].substring(0, 1).toUpperCase() + val[0].substring(1, val[0].indexOf(".")));
                 self.imgSrc = val[1];
                 self.img.attr("src", "data:image/png;base64, " + self.imgSrc);
             });

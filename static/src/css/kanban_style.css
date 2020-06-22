@@ -9,3 +9,8 @@
 .oks_kanban_info {
     font-size: 2em;
 }
+
+.oks_intranet_kanban_img {
+    height: auto;
+    width: 100%;
+}

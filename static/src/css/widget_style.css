@@ -6,14 +6,24 @@
 }
 
 #oks_img_btn_div > button {
-    margin: 10px;
+    margin: 0px 10px;
 }
 
 #oks_intranet_img_div {
     align-items: center;
     display: flex;
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
     justify-content: center;
+}
+
+#oks_intranet_img_div > * {
+    flex-basis: 100%;
+}
+
+#oks_intranet_img_div > p {
+    font-size: 1.3em;
+    text-align: center;
+    margin: 5px;
 }
 
 #oks_intranet_img{
