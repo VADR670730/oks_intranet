@@ -21,13 +21,13 @@
                                     <field name="description"/>
                                 </group>
                             </div>
-                            <widget name="oks_intranet_img_prev"/>
                             <div class="oks_item_per_row">
                                 <group>
                                     <field name="thumbnail" groups="oks_intranet.intranet_manager"/>
                                     <field name="documents" widget="many2many_binary" string="Fotos"/>
                                 </group>
                             </div>
+                            <widget name="oks_intranet_img_prev"/>
                         </div>
                     </sheet>
                 </form>

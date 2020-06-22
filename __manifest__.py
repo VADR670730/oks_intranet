@@ -38,7 +38,7 @@
         'data/ir_rule.xml',
     ],
     'qweb': [
-        "static/src/xml/oks_intranet_photos.xml",
+        "static/src/xml/oks_intranet_img_prev.xml",
     ],
     # only loaded in demonstration mode
     'demo': [],

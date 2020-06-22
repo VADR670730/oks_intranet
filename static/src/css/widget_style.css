@@ -1,3 +1,13 @@
+/**
+* All CSS styles in this file are used ONLY in widgets created by this module.
+*/
+
+/* oks_intranet_img_prev */
+#oks_intranet_prev_start {
+    margin: 0 auto;
+    max-width: 200px;
+}
+
 #oks_img_btn_div {
     align-items: center;
     display: flex;
@@ -16,17 +26,15 @@
     justify-content: center;
 }
 
-#oks_intranet_img_div > * {
-    flex-basis: 100%;
-}
-
 #oks_intranet_img_div > p {
+    flex-basis: 50%;
     font-size: 1.3em;
     text-align: center;
     margin: 5px;
 }
 
-#oks_intranet_img{
-    max-width: 100%;
+#oks_intranet_img {
+    flex-basis: 100%;
     height: auto;
+    max-width: 100%;
 }

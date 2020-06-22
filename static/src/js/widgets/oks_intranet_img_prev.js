@@ -23,6 +23,7 @@ odoo.define("oks_intranet.Photos", function(require) {
             this.index = 0;
             this.img = null;
             this.recordId = null;
+            this.imgDiv = null;
             this.imgLen = null;
             this.imgSrc = null;
             this.imgName = null;
@@ -31,26 +32,25 @@ odoo.define("oks_intranet.Photos", function(require) {
             self = this;
             setTimeout(async function() { //Without this magical timeout the code runs before the view is rendered
                 self.recordId = this.$("span[name='id']").text();
-                if(!self.recordId) {
-                    this.$("#oks_intranet_img_widget").hide();
-                    return;
-                }
-                await self.img_len();
-                if(self.imgLen <= 0) {
-                    this.$("#oks_intranet_img_widget").hide();
-                    return;
-                }
-                else if(self.imgLen == 1) {
-                    this.$("#oks_img_btn_div").hide();
-                }
-                self.img = this.$("#oks_intranet_img");
                 self.imgName = this.$("#oks_intranet_img_name");
-                self.display_img();
+                self.img = this.$("#oks_intranet_img");
+                self.imgDiv = this.$("#oks_intranet_img_widget");
+                self.imgDiv.hide();
+                await self.img_len();
+                if(!self.recordId || self.imgLen <= 0) {
+                    this.$("#oks_intranet_prev_start").prop("disabled", true);
+                }
             }, 1); 
         },
         events: {
+            "click #oks_intranet_prev_start": "start-evt",
             "click #oks_back_btn": "back-evt",
             "click #oks_next_btn": "next-evt",
+        },
+        "start-evt": async function() {
+            this.display_img();
+            this.imgDiv.show();
+            this.$("#oks_intranet_prev_start").remove();
         },
         "back-evt": async function() {
             await this.img_len();
