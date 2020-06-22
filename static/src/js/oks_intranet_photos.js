@@ -1,4 +1,15 @@
-// Loads image previews
+/**
+ * This Javascript code declares a widget that is referenced in photo views. Said
+ * widget displays the images contained in the documents (many2many ir.attachment) field
+ * of oks.intranet.photos
+ * 
+ * To do this it gathers the current record id from a hidden field in the view and keeps
+ * track of the index or element displayed. The back and next buttons change said index.
+ * 
+ * The image is displayed by calling a method on the python class which returns the
+ * base64 encoded datas field from ir.attachment, said data is set as the src for
+ * the HTML img element.
+ */
 odoo.define("oks_intranet.Photos", function(require) {
     "use strict";
 

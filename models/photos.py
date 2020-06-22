@@ -29,9 +29,10 @@ class Photos(models.Model):
         else:
             return -1
 
-    category = fields.Many2one(string="Categoria", comodel_name="oks.intranet.document.category", required=True, default=_default_category)
+    # No need to save this field anymore. It will always be the same.
+    category = fields.Many2one(string="Categoria", comodel_name="oks.intranet.document.category", default=_default_category, store=False)
     thumbnail = fields.Binary(compute=_default_thumbnail, store=True)
 
-    #Overwrite unused fields inherited from model
+    # Overwrite unused fields inherited from model
     user_in_charge = fields.Many2one(store=False)
     is_manual = fields.Boolean(store=False)
