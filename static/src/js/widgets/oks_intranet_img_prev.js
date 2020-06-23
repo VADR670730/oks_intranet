@@ -73,7 +73,6 @@ odoo.define("oks_intranet.Photos", function(require) {
             this.imgDiv.hide();
         },
         back_evt: async function() {
-            await this.img_len();
             this.index--;
             if(this.index < 0) {
                 this.index = this.imgLen - 1;
@@ -81,7 +80,6 @@ odoo.define("oks_intranet.Photos", function(require) {
             this.display_img();
         },
         next_evt: async function() {
-            await this.img_len();
             this.index++;
             if(this.index > (this.imgLen - 1)) {
                 this.index = 0;
