@@ -7,7 +7,7 @@ posts. Overwrites unused fields to erase them from the model.
 '''
 class IntranetPost(models.Model):
     _name = "oks.intranet.post"
-    _inherits = "oks.intranet.document"
+    _inherit = "oks.intranet.document"
     _description = "Comunicado o notica de la intranet"
 
     @api.model

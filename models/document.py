@@ -30,13 +30,13 @@ class Document(models.Model):
             record.extensions = [(6, 0, ext_ids)]
 
     @api.model
-    def get_doc_len(self, id):
-        res = self.env["oks.intranet.document"].search([("id", "=", id)])[0]
+    def get_doc_len(self, id, model):
+        res = self.env[model].search([("id", "=", id)])[0]
         return len(res.documents)
 
     @api.model
-    def get_img64(self, id, index):
-        res = self.env["oks.intranet.document"].search([("id", "=", id)])[0]
+    def get_img64(self, id, model, index):
+        res = self.env[model].search([("id", "=", id)])[0]
         size = len(res.documents)
         if size > 0 and index < size:
             return (res.documents[index].name, res.documents[index].datas)

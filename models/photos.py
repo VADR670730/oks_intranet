@@ -7,11 +7,6 @@ class Photos(models.Model):
 
     thumbnail = fields.Binary(string="Miniatura", attachment=True, store=True)
 
-    @api.depends("documents")
-    def _default_thumbnail(self):
-        if len(self.documents) >= 1:
-            return self.documents[0].datas
-
     @api.model
     def _default_category(self):
         return self.env.ref("oks_intranet.document_cat_general")

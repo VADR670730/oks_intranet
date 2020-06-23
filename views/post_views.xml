@@ -7,20 +7,21 @@
             <field name="arch" type="xml">
                 <form>
                     <sheet>
+                        <field name="id" invisible="1"/>
+                        <span id="oks_intranet_model" invisible="1">oks.intranet.post</span>
                         <div class="oks_item_per_row">
                             <div class="oks_form_post_header">
                                 <field name="name"/>
                             </div>
                             <div class="oks_item_per_row oks_form_body">
                                 <span groups="oks_intranet.intranet_manager">Categoria:</span>
-                                <field name="category"/>
+                                <field name="post_category"/>
                                 <field name="date"/>
                                 <span groups="oks_intranet.intranet_manager">Descripción:</span>
                                 <field name="description"/>
-                                <span groups="oks_intranet.intranet_manager">Imagen:</span>
-                                <div class="oks_center_img">
-                                    <field name="image" widget="image"/>
-                                </div>
+                                <span groups="oks_intranet.intranet_manager">Archivos:</span>
+                                <field name="documents" widget="many2many_binary"/>
+                                <widget name="oks_intranet_file_preview"/>
                             </div>
                         </div>
                     </sheet>
@@ -36,7 +37,7 @@
                <kanban>
                     <field name="id"/>
                     <field name="name"/>
-                    <field name="category"/>
+                    <field name="post_category"/>
                     <field name="date"/>
                     <templates>
                         <t t-name="kanban-box">
@@ -45,12 +46,8 @@
                                     <field name="name"/>
                                 </span>
                                 <div class="oks_kanban_info oks_item_per_row">
-                                    <span>Categoria: 
-                                        <field name="category"/>
-                                    </span>
-                                    <span>Fecha: 
-                                        <field name="date"/>
-                                    </span>
+                                    <field name="category"/>
+                                    <field name="date"/>
                                     <field name="description"/>
                                 </div>
                             </div>             

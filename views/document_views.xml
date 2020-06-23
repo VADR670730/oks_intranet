@@ -7,6 +7,8 @@
             <field name="arch" type="xml">
                 <form>
                     <sheet>
+                        <field name="id" invisible="1"/>
+                        <span id="oks_intranet_model" invisible="1">oks.intranet.document</span>
                         <div class="oks_item_per_row">
                             <div class="oks_item_per_row oks_form_doc_header">
                                 <group>
@@ -22,6 +24,7 @@
                                     <field name="documents" widget="many2many_binary"/>
                                 </group>
                             </div>
+                            <widget name="oks_intranet_file_preview"/>
                         </div>
                     </sheet>
                 </form>
