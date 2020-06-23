@@ -16,23 +16,9 @@ class Photos(models.Model):
     def _default_category(self):
         return self.env.ref("oks_intranet.document_cat_general")
 
-    @api.model
-    def get_doc_len(self, id):
-        res = self.env["oks.intranet.photos"].search([("id", "=", id)])[0]
-        return len(res.documents)
-
-
-    @api.model
-    def get_img64(self, id, index):
-        res = self.env["oks.intranet.photos"].search([("id", "=", id)])[0]
-        size = len(res.documents)
-        if size > 0 and index < size:
-            return (res.documents[index].name, res.documents[index].datas)
-        else:
-            return -1
-
     # Overwrite unused fields inherited from model
     # No need to save this field anymore. It will always be the same.
     category = fields.Many2one(string="Categoria", comodel_name="oks.intranet.document.category", default=_default_category, store=False)
     user_in_charge = fields.Many2one(store=False)
     is_manual = fields.Boolean(store=False)
+    extensions = fields.Many2many(store=False)

@@ -79,13 +79,13 @@ odoo.define("oks_intranet.Photos", function(require) {
             this.display_img();
         },
         img_len: async function() {
-            this.imgLen = await this._rpc({model: "oks.intranet.photos", method: "get_doc_len", args: [this.recordId]}).then(function(val) {
+            this.imgLen = await this._rpc({model: "oks.intranet.document", method: "get_doc_len", args: [this.recordId]}).then(function(val) {
                 return val;
             });
         },
         display_img: async function() {
             self = this;
-            await this._rpc({model: "oks.intranet.photos", method: "get_img64", args: [this.recordId, this.index]}).then(function(val) {
+            await this._rpc({model: "oks.intranet.document", method: "get_img64", args: [this.recordId, this.index]}).then(function(val) {
                 self.imgName.text(val[0].substring(0, 1).toUpperCase() + val[0].substring(1, val[0].indexOf(".")));
                 self.imgSrc = val[1];
                 self.img.attr("src", "data:image/png;base64, " + self.imgSrc);

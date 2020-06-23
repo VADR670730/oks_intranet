@@ -2,6 +2,13 @@ import os.path
 from ast import literal_eval
 from odoo import fields, models, api # pylint: disable=import-error
 
+'''
+This is the base class INHERITED by all models in this model. It contains basic
+functionality to restrict access to records based on category and most importantly, 
+it interacts with the oks_intranet_img_prev widget which uses XMLRPC calls to send
+the documents' base64 content to the javascript client so that they can be rendered
+and seen by the user without having to donwload the file to their computer.
+'''
 class Document(models.Model):
     _name = "oks.intranet.document"
     _description = "Documento de intranet"
@@ -21,6 +28,20 @@ class Document(models.Model):
                     if doc_ext == ex.name:
                         ext_ids.add(ex.id)
             record.extensions = [(6, 0, ext_ids)]
+
+    @api.model
+    def get_doc_len(self, id):
+        res = self.env["oks.intranet.document"].search([("id", "=", id)])[0]
+        return len(res.documents)
+
+    @api.model
+    def get_img64(self, id, index):
+        res = self.env["oks.intranet.document"].search([("id", "=", id)])[0]
+        size = len(res.documents)
+        if size > 0 and index < size:
+            return (res.documents[index].name, res.documents[index].datas)
+        else:
+            return -1
             
     name = fields.Char(string="Nombre", required=True)
     description = fields.Text(string="Descripción")
@@ -32,7 +53,11 @@ class Document(models.Model):
     documents = fields.Many2many(string="Documentos", comodel_name="ir.attachment")
     extensions = fields.Many2many(string="Extensiones de los archivos", readonly=True, compute=compute_docs, store=True, comodel_name="oks.intranet.document.extension")
 
-
+'''
+This model is used to filter access to oks.intranet.document records based on the group
+or category assigned to them. The groups this model can contain should be groups that
+belong to this module. 
+'''
 class DocumentCategory(models.Model):
     _name = "oks.intranet.document.category"
 
@@ -48,6 +73,10 @@ class DocumentCategory(models.Model):
         ('post_cat_uniq', 'UNIQUE (name)',  'No pueden existir dos categorias iguales')
     ]
 
+'''
+Model used to retrieve all the extensions included in the attached documents of oks.intranet.document records.
+This information is displayed ONLY in oks.intranet.document kanban views.
+'''
 class ExtensionTag(models.Model):
     _name = "oks.intranet.document.extension"
 
