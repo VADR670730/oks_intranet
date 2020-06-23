@@ -72,8 +72,8 @@ edits this module, I know the IDs are very long.
 #oks_intranet_prev_content {
     height: auto;    
     max-height: 100%;
+    max-width: 100%;
     padding-bottom: 25px;
-    width: 100%;
 }
 
 #oks_intranet_prev_next_container {
