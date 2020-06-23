@@ -1,5 +1,6 @@
 /**
-* All CSS styles in this file are used ONLY in widgets created by this module.
+* All CSS styles in this file are used ONLY in widgets created by this module. Sorry to whoever
+edits this module, I know the IDs are very long.
 */
 
 /* oks_intranet_img_prev */
@@ -8,33 +9,76 @@
     max-width: 200px;
 }
 
-#oks_img_btn_div {
+#oks_intranet_prev_widget {
     align-items: center;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: none;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    width: 100%;
+}
+
+#oks_intranet_prev_container {
+    display: grid;
+    height: 100%;
+    grid-template-columns: 10% 80% 10%;
+    grid-template-rows: 5% 95%;
+    width: 100%;
+}
+
+#oks_intranet_prev_container > div > button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 10em;
+    outline: none;
+}
+
+#oks_intranet_prev_close_container {
+    grid-column-start: 1;
+    grid-column-end: 4;
+    grid-row-start: 1;
+    grid-row-end: 1;
     display: flex;
-    flex-wrap: nowrap;
-    justify-content: center;
+    justify-content: flex-end;
 }
 
-#oks_img_btn_div > button {
-    margin: 0px 10px;
+#oks_intranet_close_prev {
+    transform: rotate(45deg);
 }
 
-#oks_intranet_img_div {
-    align-items: center;
+#oks_intranet_prev_back_container {
+    grid-column-start: 1;
+    grid-column-end: 1;
+    grid-row-start: 1;
+    grid-row-end: 3;
+}
+
+#oks_intranet_prev_display {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+    flex-direction: column;
+    grid-column-start: 2;
+    grid-column-end: 2;
+    grid-row-start: 2;
+    grid-row-end: 2;
 }
 
-#oks_intranet_img_div > p {
-    flex-basis: 50%;
-    font-size: 1.3em;
-    text-align: center;
-    margin: 5px;
+#oks_intranet_prev_name {
+    color: white;
+    font-size: 2.5em;
 }
 
-#oks_intranet_img {
-    flex-basis: 100%;
-    height: auto;
-    max-width: 100%;
+#oks_intranet_prev_content {
+    height: auto;    
+    max-height: 100%;
+    padding-bottom: 25px;
+    width: 100%;
+}
+
+#oks_intranet_prev_next_container {
+    grid-column-start: 3;
+    grid-column-end: 4;
+    grid-row-start: 1;
+    grid-row-end: 3;
 }

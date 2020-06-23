@@ -3,6 +3,12 @@
     flex-wrap: wrap;
 }
 
+.oks_intranet_center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .oks_item_per_row > * {
     flex-basis: 100%;
 }

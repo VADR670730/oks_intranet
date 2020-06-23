@@ -13,13 +13,16 @@
 odoo.define("oks_intranet.Photos", function(require) {
     "use strict";
 
-    var Widget= require('web.Widget');
-    var widgetRegistry = require('web.widget_registry');
+    var Core = require("web.core");
+    var Qweb = Core.qweb;
+    var Widget= require("web.Widget");
+    var widgetRegistry = require("web.widget_registry");
 
     var MyWidget = Widget.extend({
-        template: "oks_intranet.PhotoPreview",
+        template: "oks_intranet.PreviewButton",
         init: function (parent) {
             this._super(parent);
+            this.fullWindow = null;
             this.index = 0;
             this.img = null;
             this.recordId = null;
@@ -32,27 +35,34 @@ odoo.define("oks_intranet.Photos", function(require) {
             self = this;
             setTimeout(async function() { //Without this magical timeout the code runs before the view is rendered
                 self.recordId = this.$("span[name='id']").text();
-                self.imgName = this.$("#oks_intranet_img_name");
-                self.img = this.$("#oks_intranet_img");
-                self.imgDiv = this.$("#oks_intranet_img_widget");
-                self.imgDiv.hide();
+                self.fullWindow = this.$("html");
+                self.fullWindow.append(Qweb.render("oks_intranet.Preview"));
+                self.imgDiv = this.$("#oks_intranet_prev_widget");
+                self.imgName = this.$("#oks_intranet_prev_name");
+                self.img = this.$("#oks_intranet_prev_content");
+
+                //Add listeners to the buttons from the template rendered outside the widget
+                this.$("#oks_intranet_close_prev").click(function() { self.close_evt(); });       
+                this.$("#oks_intranet_back_prev").click(function() { self.back_evt();});   
+                this.$("#oks_intranet_next_prev").click(function() { self.next_evt();});   
+
                 await self.img_len();
-                if(!self.recordId || self.imgLen <= 0) {
-                    this.$("#oks_intranet_prev_start").prop("disabled", true);
+                if(!self.recordId || self.imgLen >= 1) {
+                    this.$("#oks_intranet_prev_start").prop("disabled", false);
                 }
             }, 1); 
         },
         events: {
             "click #oks_intranet_prev_start": "start-evt",
-            "click #oks_back_btn": "back-evt",
-            "click #oks_next_btn": "next-evt",
         },
         "start-evt": async function() {
-            this.display_img();
-            this.imgDiv.show();
-            this.$("#oks_intranet_prev_start").remove();
+            await this.display_img();
+            this.imgDiv.css("display", "flex");
         },
-        "back-evt": async function() {
+        close_evt: async function() {
+            this.imgDiv.hide();
+        },
+        back_evt: async function() {
             await this.img_len();
             this.index--;
             if(this.index < 0) {
@@ -60,7 +70,7 @@ odoo.define("oks_intranet.Photos", function(require) {
             }
             this.display_img();
         },
-        "next-evt": async function() {
+        next_evt: async function() {
             await this.img_len();
             this.index++;
             if(this.index > (this.imgLen - 1)) {
