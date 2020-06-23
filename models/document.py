@@ -29,3 +29,7 @@ class DocumentCategory(models.Model):
     name = fields.Char(required=True)
     category_id = fields.Many2one(comodel_name="ir.module.category", default=_get_category, store=False)
     groups = fields.Many2many(comodel_name="res.groups", required=True)
+
+    _sql_constraints = [
+        ('post_cat_uniq', 'UNIQUE (name)',  'No pueden existir dos categorias iguales')
+    ]
