@@ -36,6 +36,7 @@
         'data/post_category.xml',
         'data/document_category.xml',
         'data/ir_rule.xml',
+        'data/document_extension.xml',
     ],
     'qweb': [
         "static/src/xml/oks_intranet_img_prev.xml",

@@ -30,15 +30,17 @@
             <field name="name">Formatos</field>
             <field name="res_model">oks.intranet.document</field>
             <field name="view_type">form</field>
-            <field name="view_mode">tree,form</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="view_id" ref="document_kanban_view"/>
             <field name="domain">[('is_manual', '=', False)]</field>
         </record>
 
         <record id="manual_action" model="ir.actions.act_window">
-            <field name="name">Documentación interna</field>
+            <field name="name">Normatividad interna</field>
             <field name="res_model">oks.intranet.document</field>
             <field name="view_type">form</field>
-            <field name="view_mode">tree,form</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="view_id" ref="document_kanban_view"/>
             <field name="domain">[('is_manual', '=', True)]</field>
             <field name="context">{'default_is_manual': True}</field>
         </record>
