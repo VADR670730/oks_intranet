@@ -6,6 +6,7 @@
             <link rel="stylesheet" href="/oks_intranet/static/src/css/form_style.css"/>
             <link rel="stylesheet" href="/oks_intranet/static/src/css/widget_style.css"/>
             <script type="text/javascript" src="/oks_intranet/static/src/js/widgets/oks_intranet_img_prev.js"></script>
+            <script type="text/javascript" src="/oks_intranet/static/src/js/views/doc_kanban.js"></script>
         </xpath>
     </template>
 </odoo>

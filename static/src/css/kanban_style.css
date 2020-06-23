@@ -18,3 +18,26 @@
 .oks_intranet_doc_kanban {
     font-size: 1.3em;
 }
+
+.oks_intranet_ext_tag {
+    align-items: center;
+    border-radius: 10px;
+    color: white;
+    font-size: 0.9em !important;
+    font-weight: bold !important;
+    text-align: center;
+    margin: 0 5px;
+    width: 50px;
+}
+
+.oks_intranet_ext_docx {
+    background-color: #1e88e5 !important;
+}
+
+.oks_intranet_ext_xlsx {
+    background-color: #43a047 !important;
+}
+
+.oks_intranet_ext_pdf {
+    background-color: #e53935 !important;
+}
