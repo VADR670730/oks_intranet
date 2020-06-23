@@ -17,6 +17,14 @@
             <field name="name">xls</field>
         </record>
 
+        <record id="pptx_extension" model="oks.intranet.document.extension">
+            <field name="name">pptx</field>
+        </record>
+
+        <record id="ppt_extension" model="oks.intranet.document.extension">
+            <field name="name">ppt</field>
+        </record>
+
         <record id="pdf_extension" model="oks.intranet.document.extension">
             <field name="name">pdf</field>
         </record>

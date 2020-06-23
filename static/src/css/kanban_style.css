@@ -15,29 +15,60 @@
     width: 100%;
 }
 
+/*
+* All styles associated with oks.intranet.document kanban views
+*/
 .oks_intranet_doc_kanban {
+    height: 100%;
     font-size: 1.3em;
+}
+
+.oks_intranet_doc_kanban_info {
+    display: flex;
+    align-content: flex-start;
+}
+
+div.oks_intranet_ext_tag_cont {
+    align-items: flex-end !important;
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
 }
 
 .oks_intranet_ext_tag {
     align-items: center;
     border-radius: 10px;
     color: white;
-    font-size: 0.9em !important;
-    font-weight: bold !important;
+    font-size: 1em !important;
     text-align: center;
-    margin: 0 5px;
+    margin: 5px;
     width: 50px;
 }
 
 .oks_intranet_ext_docx {
-    background-color: #1e88e5 !important;
+    background-color: #2962ff !important;
+}
+
+.oks_intranet_ext_doc {
+    background-color: #42a5f5 !important;
 }
 
 .oks_intranet_ext_xlsx {
-    background-color: #43a047 !important;
+    background-color: #00c853 !important;
+}
+
+.oks_intranet_ext_xls {
+    background-color: #66bb6a !important;
+}
+
+.oks_intranet_ext_pptx {
+    background-color: #ff3d00 !important;
+}
+
+.oks_intranet_ext_ppt {
+    background-color: #ff7043 !important;
 }
 
 .oks_intranet_ext_pdf {
-    background-color: #e53935 !important;
+    background-color: #d50000 !important;
 }
