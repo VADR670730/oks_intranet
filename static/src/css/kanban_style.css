@@ -88,3 +88,53 @@ div.oks_intranet_ext_tag_cont {
 .oks_intranet_ext_pdf {
     background-color: #d50000 !important;
 }
+
+/*
+* Styles for oks.intranet.photos kanban view
+*/
+.oks_intranet_photo_kanban_cont {
+    align-items: flex-start;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 32%;
+    justify-content: center;
+    max-height: 32%;
+    max-width: 32%;
+    min-height: 400px;
+    min-width: 400px;
+    width: 32% !important;
+}
+
+.oks_intranet_photo_kanban_cont > *,
+.oks_intrantet_photo_kanban_details> * {
+    flex-basis: 100%
+}
+
+.oks_intrantet_photo_kanban_details {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+div.oks_intrantet_photo_kanban_details > span {
+    font-size: 1.5em;
+    text-align: center;
+}
+
+div.oks_intranet_phot_kanban_details span:nth-child(1) {
+    font-size: 3em;
+}
+
+.oks_intranet_photo_kanban_img {
+    align-items: center;
+    align-self: flex-end;
+    display: flex;
+    justify-content: center;
+}
+
+.oks_intranet_photo_kanban_img > img {
+    height: 100%;
+    width: 100%;
+}

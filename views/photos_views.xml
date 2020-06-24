@@ -46,19 +46,15 @@
                     <field name="thumbnail"/>
                     <templates>
                         <t t-name="kanban-box">
-                            <div class="oe_kanban_global_click oks_kanban_post oks_item_per_row">
-                                <span class="oks_kanban_title">
+                            <div class="oe_kanban_global_click oks_intranet_photo_kanban_cont">
+                                <div class="oks_intrantet_photo_kanban_details">
                                     <field name="name"/>
-                                </span>
-                                <div class="oks_kanban_info oks_item_per_row">
-                                    <span>Fecha: 
-                                        <field name="date"/>
-                                    </span>
+                                    <field name="date"/>
                                     <field name="description"/>
                                 </div>
-                                <t t-if="record.thumbnail.raw_value">
-                                    <img t-att-src="kanban_image('oks.intranet.photos', 'thumbnail', record.id.raw_value)" class="oks_intranet_kanban_img"/>
-                                </t>
+                                <div class="oks_intranet_photo_kanban_img">
+                                    <img t-att-src="kanban_image('oks.intranet.photos', 'thumbnail', record.id.raw_value)"/>
+                                </div>
                             </div>             
                         </t>
                     </templates>
