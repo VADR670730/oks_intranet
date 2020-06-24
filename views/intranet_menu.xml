@@ -13,7 +13,7 @@
         </record>
 
         <record id="post_cat_action" model="ir.actions.act_window">
-            <field name="name">Categorias</field>
+            <field name="name">Categorías</field>
             <field name="res_model">oks.intranet.post.category</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
@@ -46,7 +46,7 @@
         </record>
 
         <record id="doc_cat_action" model="ir.actions.act_window">
-            <field name="name">Categorias</field>
+            <field name="name">Categorías</field>
             <field name="res_model">oks.intranet.document.category</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
@@ -75,7 +75,7 @@
         />
 
         <menuitem id="post_cat_menu"
-            name="Categorias"
+            name="Categorías"
             parent="post_menu_root"
             action="post_cat_action"
             sequence="4"
@@ -114,7 +114,7 @@
         />
 
         <menuitem id="doc_cat_menu"
-            name="Categorias"
+            name="Categorías"
             parent="doc_menu_root"
             action="doc_cat_action"
             sequence="4"

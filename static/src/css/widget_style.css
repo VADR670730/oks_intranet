@@ -62,11 +62,13 @@ edits this module, I know the IDs are very long.
     grid-column-end: 2;
     grid-row-start: 2;
     grid-row-end: 2;
+    justify-content: center;
 }
 
 #oks_intranet_prev_name {
     color: white;
     font-size: 2.5em;
+    text-align: center;
 }
 
 #oks_intranet_prev_content {
@@ -81,4 +83,11 @@ edits this module, I know the IDs are very long.
     grid-column-end: 4;
     grid-row-start: 1;
     grid-row-end: 3;
+}
+
+#oks_intranet_prev_next_container,
+#oks_intranet_prev_back_container {
+    align-items: center;
+    display: flex;
+    justify-content: center;
 }
