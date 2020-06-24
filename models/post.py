@@ -2,8 +2,9 @@ from odoo import models, fields, api # pylint: disable=import-error
 
 '''
 Used to display new's posts accessible by all users. Extends oks.intranet.document
-and only adds a post_category field which is only used to organize and filter out
-posts. Overwrites unused fields to erase them from the model.
+and adds a post_category field to filter aid in filtering. It also adds an HTML
+field used to display HTML content in it's form view. Its description is displayed
+in its kanban view and can only be seen by managers in its form view.
 '''
 class IntranetPost(models.Model):
     _name = "oks.intranet.post"
@@ -15,6 +16,7 @@ class IntranetPost(models.Model):
         return self.env.ref("oks_intranet.document_cat_general")
 
     post_category = fields.Many2one(comodel_name="oks.intranet.post.category", string="Categoría", required=True)
+    text_content = fields.Html()
 
     # Overwrite unused fields inherited from model
     # No need to save this field anymore. It will always be the same.

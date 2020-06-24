@@ -9,20 +9,20 @@
                     <sheet>
                         <field name="id" invisible="1"/>
                         <span id="oks_intranet_model" invisible="1">oks.intranet.post</span>
-                        <div class="oks_item_per_row">
-                            <div class="oks_form_post_header">
-                                <field name="name"/>
-                            </div>
-                            <div class="oks_item_per_row oks_form_body">
-                                <span groups="oks_intranet.intranet_manager">Categoria:</span>
+                        <div class="oks_intranet_post_form_container">
+                            <field name="name" style="font-size: 2.5em; text-align: center;"/>
+                            <div class="details oks_intranet_post_div">
                                 <field name="post_category"/>
                                 <field name="date"/>
-                                <span groups="oks_intranet.intranet_manager">Descripción:</span>
-                                <field name="description"/>
-                                <span groups="oks_intranet.intranet_manager">Archivos:</span>
-                                <field name="documents" widget="many2many_binary"/>
-                                <widget name="oks_intranet_file_preview"/>
                             </div>
+                            <hr class="oks_intranet_theme_break"></hr>
+                            <field name="description" placeholder="Descripción, solo aparece en vista previa" 
+                                class="oe_edit_only" groups="oks_intranet.intranet_manager"/>
+                            <field name="text_content"/>
+                            <div class="oks_intranet_post_div">
+                                <field name="documents" widget="many2many_binary"/>
+                            </div>
+                            <widget name="oks_intranet_file_preview" style="text-align: center;"/>
                         </div>
                     </sheet>
                 </form>
@@ -41,15 +41,11 @@
                     <field name="date"/>
                     <templates>
                         <t t-name="kanban-box">
-                            <div class="oe_kanban_global_click oks_kanban_post oks_item_per_row">
-                                <span class="oks_kanban_title">
-                                    <field name="name"/>
-                                </span>
-                                <div class="oks_kanban_info oks_item_per_row">
-                                    <field name="category"/>
-                                    <field name="date"/>
-                                    <field name="description"/>
-                                </div>
+                            <div class="oe_kanban_global_click">
+                                <field name="name"/>>
+                                <field name="category"/>
+                                <field name="date"/>
+                                <field name="description"/>
                             </div>             
                         </t>
                     </templates>
