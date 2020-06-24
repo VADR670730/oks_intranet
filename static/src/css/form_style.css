@@ -42,7 +42,7 @@
 }
 
 .oks_intranet_theme_break {
-    border: 0.2px;
-    color: grey;
-    opacity: 0.7;
+    border-top: 1px solid grey;
+    max-width: 75%;
+    opacity: 0.2;
 }

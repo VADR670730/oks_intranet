@@ -4,6 +4,10 @@ edits this module, I know the IDs are very long.
 */
 
 /* oks_intranet_img_prev */
+.oks_intranet_prev_cont {
+    text-align: center;
+}
+
 #oks_intranet_prev_start {
     margin: 0 auto;
     max-width: 200px;

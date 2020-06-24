@@ -22,7 +22,7 @@
                             <div class="oks_intranet_post_div">
                                 <field name="documents" widget="many2many_binary"/>
                             </div>
-                            <widget name="oks_intranet_file_preview" style="text-align: center;"/>
+                            <widget name="oks_intranet_file_preview"/>
                         </div>
                     </sheet>
                 </form>

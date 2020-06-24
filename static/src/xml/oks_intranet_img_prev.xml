@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates xml:space="preserve">
     <t t-name="oks_intranet.PreviewButton">
-        <div>
+        <div class="oks_intranet_prev_cont">
             <button class="btn btn-primary" id="oks_intranet_prev_start" disabled="true">Ver archivos</button>
         </div>
     </t>
