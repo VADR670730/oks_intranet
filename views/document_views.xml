@@ -44,8 +44,8 @@
                     <templates>
                         <t t-name="kanban-box">
                             <div class="oe_kanban_global_click">
-                                <div class="oks_item_per_row oks_intranet_doc_kanban">
-                                    <div class="oks_item_per_row oks_intranet_doc_kanban_info">
+                                <div class="oks_intranet_doc_kanban_flex">
+                                    <div class="oks_intranet_doc_kanban">
                                         <field name="name"/>
                                         <field name="date"/>
                                         <field name="category"/>

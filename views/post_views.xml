@@ -41,15 +41,11 @@
                     <field name="date"/>
                     <templates>
                         <t t-name="kanban-box">
-                            <div class="oe_kanban_global_click oks_kanban_post oks_item_per_row">
-                                <span class="oks_kanban_title">
-                                    <field name="name"/>
-                                </span>
-                                <div class="oks_kanban_info oks_item_per_row">
-                                    <field name="category"/>
-                                    <field name="date"/>
-                                    <field name="description"/>
-                                </div>
+                            <div class="oe_kanban_global_click">
+                                <field name="name"/>>
+                                <field name="category"/>
+                                <field name="date"/>
+                                <field name="description"/>
                             </div>             
                         </t>
                     </templates>

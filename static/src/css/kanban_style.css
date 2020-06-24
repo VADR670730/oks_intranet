@@ -1,34 +1,50 @@
-.oks_kanban_post {
-    width: 40% !important;
-}
-
-.oks_kanban_title {
-    font-size: 3.2em;
-}
-
-.oks_kanban_info {
-    font-size: 2em;
-}
-
-.oks_intranet_kanban_img {
-    height: auto;
-    width: 100%;
-}
-
 /*
 * All styles associated with oks.intranet.document kanban views
 */
-.oks_intranet_doc_kanban {
+.oks_intranet_doc_kanban_flex {
+    align-items: flex-start;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
     height: 100%;
-    font-size: 1.3em;
 }
 
-.oks_intranet_doc_kanban_info {
-    display: flex;
+.oks_intranet_doc_kanban {
     align-content: flex-start;
+    align-items: flex-start;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    font-size: 1.3em;
+    max-height: 230px;
+    overflow: hidden;
+}
+
+.oks_intranet_doc_kanban > * {
+    flex-basis: 100%;
+    max-width: 100%;
+}
+
+.oks_intranet_doc_kanban > span {
+    margin-left: 5px;
+}
+
+/*Title*/
+.oks_intranet_doc_kanban > span:nth-child(1) {
+    font-weight: bold;
+    max-height: 48px; /*Two lines of text*/
+    overflow: hidden;
+}
+
+/*Description field*/
+.oks_intranet_doc_kanban > span:nth-child(4) {
+    max-height: 72px;
+    overflow: hidden;
 }
 
 div.oks_intranet_ext_tag_cont {
+    align-self: flex-end;
     align-items: flex-end !important;
     display: flex !important;
     flex-direction: row !important;
@@ -39,7 +55,7 @@ div.oks_intranet_ext_tag_cont {
     align-items: center;
     border-radius: 10px;
     color: white;
-    font-size: 1em !important;
+    font-size: 1.2em !important;
     text-align: center;
     margin: 5px;
     width: 50px;
