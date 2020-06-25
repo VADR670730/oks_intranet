@@ -1,34 +1,39 @@
 /**
+ * Basic renderer used just to make kanban viewports take up the whole
+ * height of their container. Used by post and photo kanban views.
+ */
+odoo.define("oks_intranet.FullHeightKanbanRenderer", function(require) {
+    "use strict";
+
+    var KanbanRenderer = require("web.KanbanRenderer");
+    var FullHeightKanban = KanbanRenderer.extend({
+        _render: function() {
+            var self = this;
+            return this._super.apply(this, arguments).then(function () {
+                self.$el.css("height", "100%");               
+            });
+        },
+    });
+
+    return FullHeightKanban;
+});
+
+
+/**
  * Kanban views do not take the whole screen height automatically.
  * I am too scared to change overwrite the css class and make 
  * all kanban views do it so instead I create this custom view
  * to inject the style attributes and also to limit the size of 
  * records per page to 6.
  */
-
 odoo.define("oks_intranet.PhotoKanban", function(require) {
     var viewRegistry = require("web.view_registry");
     var KanbanModel = require("web.KanbanModel");
     var KanbanView = require("web.KanbanView");
-    var KanbanRenderer = require("web.KanbanRenderer")
+    var HeightKanbanRenderer = require("oks_intranet.FullHeightKanbanRenderer");
     var KanbanController = require("web.KanbanController");
 
-    /**
-     * This renderer can be used in all other kanban views where a masonry layout is required. It will 
-     * always display two columns of records regardless of item length.
-     */
-    var PhotoRenderer = KanbanRenderer.extend({
-        _render: function() {
-            var self = this;
-            return this._super.apply(this, arguments).then(function () {
-                self.$el.css("height", "100%");
-                var kanbans = self.$el.find(".oks_intranet_photo_kanban_cont")
-                kanbans.each(function() {
-                    
-                });
-            });
-        },
-    });
+   
 
     /**
      * This view can be extended and have its loadParams.limit modified to a number that better
@@ -37,7 +42,7 @@ odoo.define("oks_intranet.PhotoKanban", function(require) {
     var PhotoKanban = KanbanView.extend({
         config: _.extend({}, KanbanView.prototype.config, {
             Model: KanbanModel,
-            Renderer: PhotoRenderer,
+            Renderer: HeightKanbanRenderer,
             Controller: KanbanController,
         }),
         init: function() {

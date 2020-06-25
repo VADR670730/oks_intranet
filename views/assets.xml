@@ -8,6 +8,7 @@
             <script type="text/javascript" src="/oks_intranet/static/src/js/widgets/oks_intranet_img_prev.js"></script>
             <script type="text/javascript" src="/oks_intranet/static/src/js/views/doc_kanban.js"></script>
             <script type="text/javascript" src="/oks_intranet/static/src/js/views/photo_kanban.js"></script>
+            <script type="text/javascript" src="/oks_intranet/static/src/js/views/post_kanban.js"></script>
         </xpath>
     </template>
 </odoo>

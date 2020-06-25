@@ -1,3 +1,10 @@
+/*Styles associated with oks.intranet.post kanban views*/
+.oks_intranet_post_kanban_cont {
+    flex-basis: 24% !important;
+    height: 32%;
+    max-width: 24%;
+}
+
 /*
 * All styles associated with oks.intranet.document kanban views
 */
@@ -94,10 +101,11 @@ div.oks_intranet_ext_tag_cont {
 */
 .oks_intranet_photo_kanban_cont {
     display: grid !important;
-    flex-basis: 30% !important;
+    flex-basis: 33% !important;
     grid-template-columns: 100%;
     grid-template-rows: 20% 60% 20%;
     height: 49%;
+    max-width: 32.3%;
     padding: 0 !important;
 }
 

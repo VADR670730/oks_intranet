@@ -34,16 +34,16 @@
             <field name="model">oks.intranet.post</field>
              <field name="priority" eval="1"/>
             <field name="arch" type="xml">
-               <kanban>
+               <kanban js_class="oks_intranet_post_kanban">
                     <field name="id"/>
                     <field name="name"/>
                     <field name="post_category"/>
                     <field name="date"/>
                     <templates>
                         <t t-name="kanban-box">
-                            <div class="oe_kanban_global_click">
-                                <field name="name"/>>
-                                <field name="category"/>
+                            <div class="oe_kanban_global_click oks_intranet_post_kanban_cont">
+                                <field name="name"/>
+                                <field name="post_category"/>
                                 <field name="date"/>
                                 <field name="description"/>
                             </div>             
@@ -60,7 +60,7 @@
             <field name="arch" type="xml">
                 <tree>
                     <field name="name"/>
-                    <field name="category"/>
+                    <field name="post_category"/>
                     <field name="description"/>
                     <field name="date"/>
                 </tree>
