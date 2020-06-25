@@ -9,3 +9,4 @@ intranet_doc_cat_user,Read document categories,model_oks_intranet_document_categ
 intranet_doc_cat_manager,Modify intranet cateogires,model_oks_intranet_document_category,intranet_manager,1,1,1,1
 intranet_photos_user,Read intranet photos,model_oks_intranet_photos,intranet_user,1,0,0,0
 intranet_photos_manager,Modify intranet photos,model_oks_intranet_photos,intranet_manager,1,1,1,1
+intranet_doc_extension_user,Read document extensions,model_oks_intranet_document_extension,intranet_user,1,0,0,0
