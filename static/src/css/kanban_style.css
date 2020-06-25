@@ -97,13 +97,9 @@ div.oks_intranet_ext_tag_cont {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    height: 32%;
     justify-content: center;
-    max-height: 32%;
-    max-width: 32%;
-    min-height: 400px;
-    min-width: 400px;
-    width: 32% !important;
+    width: 600px !important;
+    height: 500px;
 }
 
 .oks_intranet_photo_kanban_cont > *,
@@ -131,7 +127,9 @@ div.oks_intranet_phot_kanban_details span:nth-child(1) {
     align-items: center;
     align-self: flex-end;
     display: flex;
+    height: 300px;
     justify-content: center;
+    width: 100%;
 }
 
 .oks_intranet_photo_kanban_img > img {
