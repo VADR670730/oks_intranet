@@ -10,9 +10,10 @@
                         <field name="id" invisible="1"/>
                         <span id="oks_intranet_model" invisible="1">oks.intranet.post</span>
                         <div class="oks_intranet_post_form_container">
-                            <field name="name" style="font-size: 2.5em; text-align: center;"/>
+                            <field name="name" style="font-size: 2.5em; text-align: center;"
+                                placeholder="Título"/>
                             <div class="details oks_intranet_post_div">
-                                <field name="post_category"/>
+                                <field name="post_category" placeholder="Categoría"/>
                                 <field name="date"/>
                             </div>
                             <hr class="oks_intranet_theme_break"></hr>
@@ -36,16 +37,20 @@
             <field name="arch" type="xml">
                <kanban js_class="oks_intranet_post_kanban">
                     <field name="id"/>
-                    <field name="name"/>
-                    <field name="post_category"/>
-                    <field name="date"/>
                     <templates>
                         <t t-name="kanban-box">
-                            <div class="oe_kanban_global_click oks_intranet_post_kanban_cont">
-                                <field name="name"/>
-                                <field name="post_category"/>
-                                <field name="date"/>
-                                <field name="description"/>
+                            <div class="oe_kanban_global_click oks_intranet_post_kanban_cont">                            
+                                <div class="oks_intranet_post_kanban_details">
+                                    <field name="post_category"/>
+                                    <field name="date"/>
+                                </div>
+                                <div class="oks_intranet_post_kanban_title">
+                                    <field name="name"/>
+                                    <hr></hr>
+                                </div>
+                                <div class="oks_intranet_post_kanban_descrip">
+                                    <field name="description"/>
+                                </div>
                             </div>             
                         </t>
                     </templates>
