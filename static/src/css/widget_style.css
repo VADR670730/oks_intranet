@@ -65,15 +65,17 @@ edits this module, I know the IDs are very long.
     grid-template-rows: auto auto;
     grid-column-start: 2;
     grid-column-end: 2;
-    grid-row-start: 2;
-    grid-row-end: 2;
+    grid-row-start: 1;
+    grid-row-end: 3;
     justify-items: center;
+    padding: 10px 0px;
 }
 
 #oks_intranet_prev_name {
     color: white;
     font-size: 2.5em;
     text-align: center;
+    margin: auto auto 5px auto;
 }
 
 #oks_intranet_prev_img,
@@ -83,7 +85,6 @@ edits this module, I know the IDs are very long.
     height: auto;    
     max-height: 100%;
     max-width: 100%;
-    padding-bottom: 25px;
 }
 
 #oks_intranet_prev_pdf {
