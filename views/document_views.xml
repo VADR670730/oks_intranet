@@ -35,7 +35,7 @@
             <field name="name">document.kanban.view</field>
             <field name="model">oks.intranet.document</field>
             <field name="arch" type="xml">
-                <kanban js_class="oks_intranet_doc_kanban" class="oks_intranet_kanban">
+                <kanban js_class="oks_intranet_doc_kanban">
                     <field name="id"/>
                     <field name="name"/>
                     <field name="category"/>

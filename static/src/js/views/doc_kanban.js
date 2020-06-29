@@ -41,6 +41,10 @@
             Renderer: DocRenderer,
             Controller: KanbanController,
         }),
+        init: function() {
+            this._super.apply(this, arguments);
+            this.loadParams.limit = 12;
+        }
     });
 
     viewRegistry.add("oks_intranet_doc_kanban", DocKanban)
