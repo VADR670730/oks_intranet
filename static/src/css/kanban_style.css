@@ -24,6 +24,16 @@
     font-size: 1.1em;
 }
 
+.oks_intranet_post_kanban_details > span:nth-child(1) {
+    align-items: center;
+    border-radius: 10px;
+    color: white;
+    display: flex;
+    padding: 0 10px 0 10px;
+    text-align: center;
+    width: auto;
+}
+
 .oks_intranet_post_kanban_details > span:nth-child(2) {
     margin-left: auto;
 }

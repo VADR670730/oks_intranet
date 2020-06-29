@@ -11,8 +11,8 @@ odoo.define("oks_intranet.PostKanban", function(require) {
 
     /**
      * t-afft-style should be able to do this directly on the kanban view
-     * but it is not. Hopefully this is just a temporary bandaid while I 
-     * figure it out
+     * but it is not working. Hopefully this is just a temporary bandaid while I 
+     * figure it out.
      */
     var PostRenderer = KanbanRenderer.extend({
         _render: function() {
