@@ -55,7 +55,6 @@ odoo.define("oks_intranet.Photos", function(require) {
                 $("#oks_intranet_close_prev").unbind().click(function() { self.close_evt(); });       
                 $("#oks_intranet_back_prev").unbind().click(function() { self.back_evt();});   
                 $("#oks_intranet_next_prev").unbind().click(function() { self.next_evt();});   
-
                 if(self.recordId) {
                     await self.img_len()
                     if (self.imgLen >= 1) {
