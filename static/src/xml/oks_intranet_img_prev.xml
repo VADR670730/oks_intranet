@@ -12,14 +12,15 @@
                 <div id="oks_intranet_prev_close_container">
                     <button id="oks_intranet_close_prev">+</button>
                 </div>
-                <div id="oks_intranet_prev_back_container" class="oks_intranet_center">
+                <div id="oks_intranet_prev_back_container">
                     <button id="oks_intranet_back_prev">&lt;</button>
                 </div>
-                <div id="oks_intranet_prev_display" class="oks_intranet_center">
+                <div id="oks_intranet_prev_display">
                     <p id="oks_intranet_prev_name"></p>
-                    <img id="oks_intranet_prev_content"/>
+                    <img id="oks_intranet_prev_img"/>
+                    <iframe id="oks_intranet_prev_pdf"></iframe>
                 </div>
-                <div id="oks_intranet_prev_next_container" class="oks_intranet_center">
+                <div id="oks_intranet_prev_next_container">
                     <button id="oks_intranet_next_prev">&gt;</button>
                 </div>
             </div>

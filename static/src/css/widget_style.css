@@ -60,13 +60,14 @@ edits this module, I know the IDs are very long.
 }
 
 #oks_intranet_prev_display {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: auto auto;
     grid-column-start: 2;
     grid-column-end: 2;
     grid-row-start: 2;
     grid-row-end: 2;
-    justify-content: center;
+    justify-items: center;
 }
 
 #oks_intranet_prev_name {
@@ -75,11 +76,20 @@ edits this module, I know the IDs are very long.
     text-align: center;
 }
 
-#oks_intranet_prev_content {
+#oks_intranet_prev_img,
+#oks_intranet_prev_pdf {
+    grid-row-start: 2;
+    grid-row-end: 3;
     height: auto;    
     max-height: 100%;
     max-width: 100%;
     padding-bottom: 25px;
+}
+
+#oks_intranet_prev_pdf {
+    border: 0;
+    height: 100%;
+    width: 100%;
 }
 
 #oks_intranet_prev_next_container {

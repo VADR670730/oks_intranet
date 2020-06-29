@@ -37,6 +37,7 @@ odoo.define("oks_intranet.Photos", function(require) {
             this.imgLen = null;
             this.imgSrc = null;
             this.imgName = null;
+            this.pdfView = null;
         },
         start: async function () {
             self = this;
@@ -47,7 +48,9 @@ odoo.define("oks_intranet.Photos", function(require) {
                 self.fullWindow.append(Qweb.render("oks_intranet.Preview"));
                 self.imgDiv = $("#oks_intranet_prev_widget");
                 self.imgName = $("#oks_intranet_prev_name");
-                self.img = $("#oks_intranet_prev_content");
+                self.img = $("#oks_intranet_prev_img");
+                self.pdfView = $("#oks_intranet_prev_pdf");
+                self.pdfView.hide();
 
                 //Add listeners to the buttons from the template rendered outside the widget
                 //Unbind is an attempt to remove the weird double trigger that happens sometimes
@@ -88,16 +91,32 @@ odoo.define("oks_intranet.Photos", function(require) {
             this.display_img();
         },
         img_len: async function() {
-            this.imgLen = await this._rpc({model: "oks.intranet.document", method: "get_doc_len", args: [this.recordId, this.modelName]}).then(function(val) {
+            this.imgLen = await this._rpc({model: "oks.intranet.document", method: "get_doc_len",
+            args: [this.recordId, this.modelName]}).then(function(val) {
                 return val;
             });
         },
         display_img: async function() {
             self = this;
-            await this._rpc({model: "oks.intranet.document", method: "get_img64", args: [this.recordId, this.modelName, this.index]}).then(function(val) {
-                self.imgName.text(val[0].substring(0, 1).toUpperCase() + val[0].substring(1, val[0].indexOf(".")));
-                self.imgSrc = val[1];
-                self.img.attr("src", "data:image/png;base64, " + self.imgSrc);
+            await this._rpc({
+                model: "oks.intranet.document", method: "get_img64",
+                args: [this.recordId, this.modelName, this.index]}).then(function(val) {
+                    var fileName = val[0].substring(0, 1).toUpperCase() + val[0].substring(1, val[0].indexOf("."));
+                    if(val[0].substring(val[0].indexOf(".")) == ".pdf") {
+                        self.pdfView.attr("src", "data:application/pdf;base64," + val[1]);
+                        self.pdfView.attr("name", fileName);
+                        self.img.hide();
+                        self.imgName.hide();
+                        self.pdfView.show();
+                    }
+                    else {
+                        self.imgName.text(fileName);
+                        self.imgSrc = val[1];
+                        self.img.attr("src", "data:image/png;base64, " + self.imgSrc);
+                        self.pdfView.hide();
+                        self.imgName.show();
+                        self.img.show();
+                    }
             });
         },
     });
