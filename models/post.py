@@ -28,8 +28,18 @@ class IntranetPost(models.Model):
 class IntranetPostCategory(models.Model):
     _name = "oks.intranet.post.category"
 
-    name = fields.Char()
+    name = fields.Char(string="Nombre", required=True)
+    color = fields.Char(string="Color", required=True, default="#808080")
 
     _sql_constraints = [
         ('post_cat_uniq', 'UNIQUE (name)',  'No pueden existir dos categorias iguales')
     ]
+
+    @api.model
+    def get_colors(self):
+        res = self.env["oks.intranet.post.category"].search([])
+        retval = {}
+        for record in res:
+            retval[record.name] = record.color
+        return retval
+        

@@ -2,33 +2,43 @@
  * Extends kanban view to change the amount of records per page 
  */
 odoo.define("oks_intranet.PostKanban", function(require) {
+    "use strict";
     var viewRegistry = require("web.view_registry");
     var KanbanModel = require("web.KanbanModel");
     var KanbanView = require("web.KanbanView");
-    var HeightKanbanRenderer = require("oks_intranet.FullHeightKanbanRenderer");
+    var KanbanRenderer = require("web.KanbanRenderer");
     var KanbanController = require("web.KanbanController");
 
     /**
-     * Need to also add align-content: start; so there is no huge
-     * gap between rows where the view is not full
+     * t-afft-style should be able to do this directly on the kanban view
+     * but it is not. Hopefully this is just a temporary bandaid while I 
+     * figure it out
      */
-    var CustomRenderer = HeightKanbanRenderer.extend({
+    var PostRenderer = KanbanRenderer.extend({
         _render: function() {
             var self = this;
-            return this._super.apply(this, arguments).then(function () {
-                self.$el.css("align-content", "flex-start");               
+            return this._super.apply(this, arguments).then(function() {
+                self._rpc({model: "oks.intranet.post.category", method: "get_colors", args:[]}).then(function(val) {
+                    var posts = self.$el.find(".oks_intranet_post_kanban_cont");
+                    console.log(posts);
+                    posts.each(function(index) {
+                        var cat = $(this).find(".oks_intranet_post_kanban_details").find("span")[0];
+                        $(cat).css("background-color", val[$(cat).text()]);
+                    });
+                });
+                
             });
-        },
+        }
     });
 
     /**
      * This view can be extended and have its loadParams.limit modified to a number that better
      * fits the model. It will still keep its masonry layout.
      */
-    var PhotoKanban = KanbanView.extend({
+    var PostKanban = KanbanView.extend({
         config: _.extend({}, KanbanView.prototype.config, {
             Model: KanbanModel,
-            Renderer: CustomRenderer,
+            Renderer: PostRenderer,
             Controller: KanbanController,
         }),
         init: function() {
@@ -37,5 +47,5 @@ odoo.define("oks_intranet.PostKanban", function(require) {
         }
     });
 
-    viewRegistry.add("oks_intranet_post_kanban", PhotoKanban)
+    viewRegistry.add("oks_intranet_post_kanban", PostKanban)
 });

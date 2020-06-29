@@ -1,3 +1,11 @@
+.oks_intranet_kanban {
+    height: 100%;
+}
+
+.oks_intranet_photo_kanban {
+    align-content: flex-start;
+}
+
 /*Styles associated with oks.intranet.post kanban views*/
 .oks_intranet_post_kanban_cont {
     display: grid !important;

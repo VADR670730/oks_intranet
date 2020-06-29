@@ -35,8 +35,12 @@
             <field name="model">oks.intranet.post</field>
              <field name="priority" eval="1"/>
             <field name="arch" type="xml">
-               <kanban js_class="oks_intranet_post_kanban">
+               <kanban js_class="oks_intranet_post_kanban" class="oks_intranet_kanban">
                     <field name="id"/>
+                    <field name="post_category"/>
+                    <field name="date"/>
+                    <field name="name"/>
+                    <field name="description"/>
                     <templates>
                         <t t-name="kanban-box">
                             <div class="oe_kanban_global_click oks_intranet_post_kanban_cont">                            
@@ -61,7 +65,6 @@
         <record id="post_tree_view" model="ir.ui.view">
             <field name="name">post.tree.view</field>
             <field name="model">oks.intranet.post</field>
-            <field name="priority" eval="2"/>
             <field name="arch" type="xml">
                 <tree>
                     <field name="name"/>
@@ -70,6 +73,32 @@
                     <field name="date"/>
                 </tree>
             </field>
+        </record>
+
+        <record id="post_category_tree_view" model="ir.ui.view">
+            <field name="name">post.category.tree.view</field>
+                <field name="model">oks.intranet.post.category</field>
+                <field name="arch" type="xml">
+                    <tree>
+                        <field name="name"/>
+                        <field name="color"/>
+                    </tree>
+                </field>
+        </record>
+
+        <record id="post_category_form_view" model="ir.ui.view">
+            <field name="name">post.category.form.view</field>
+                <field name="model">oks.intranet.post.category</field>
+                <field name="arch" type="xml">
+                    <form>
+                        <sheet>
+                            <group>
+                                <field name="name"/>
+                                <field name="color"/>
+                            </group>
+                        </sheet>
+                    </form>
+                </field>
         </record>
     </data>
 </odoo>

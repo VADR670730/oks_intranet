@@ -39,7 +39,7 @@
             <field name="name">photos.kanban.view</field>
             <field name="model">oks.intranet.photos</field>
             <field name="arch" type="xml">
-               <kanban js_class="oks_intranet_photo_kanban">
+               <kanban js_class="oks_intranet_photo_kanban" class="oks_intranet_kanban oks_intranet_photo_kanban">
                     <field name="id"/>
                     <field name="name"/>
                     <field name="date"/>

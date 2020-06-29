@@ -4,6 +4,7 @@
  */
 
  odoo.define("oks_intranet.DocumentKanban", function(require) {
+    "use strict";
     var viewRegistry = require("web.view_registry");
     var KanbanModel = require("web.KanbanModel");
     var KanbanView = require("web.KanbanView");
@@ -17,7 +18,7 @@
     var DocRenderer = KanbanRenderer.extend({
         _render: function() {
             var self = this;
-            return this._super.apply(this, arguments).then(function () {
+            return this._super.apply(this, arguments).then(function() {
                 var tagCont = self.$el.find(".o_kanban_tags");
                 tagCont.addClass("oks_intranet_ext_tag_cont");
                 var tags = tagCont.find(".o_tag");
