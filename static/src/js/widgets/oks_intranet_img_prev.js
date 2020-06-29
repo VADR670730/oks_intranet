@@ -50,9 +50,11 @@ odoo.define("oks_intranet.Photos", function(require) {
                 self.img = $("#oks_intranet_prev_content");
 
                 //Add listeners to the buttons from the template rendered outside the widget
-                $("#oks_intranet_close_prev").click(function() { self.close_evt(); });       
-                $("#oks_intranet_back_prev").click(function() { self.back_evt();});   
-                $("#oks_intranet_next_prev").click(function() { self.next_evt();});   
+                //Unbind is an attempt to remove the weird double trigger that happens sometimes
+                //I dont know if it actually works but it is better than nothing
+                $("#oks_intranet_close_prev").unbind().click(function() { self.close_evt(); });       
+                $("#oks_intranet_back_prev").unbind().click(function() { self.back_evt();});   
+                $("#oks_intranet_next_prev").unbind().click(function() { self.next_evt();});   
 
                 if(self.recordId) {
                     await self.img_len()
