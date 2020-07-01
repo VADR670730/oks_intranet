@@ -1,12 +1,12 @@
 from odoo import models, fields, api # pylint: disable=import-error
 
-'''
-Used to display new's posts accessible by all users. Extends oks.intranet.document
-and adds a post_category field to filter aid in filtering. It also adds an HTML
-field used to display HTML content in it's form view. Its description is displayed
-in its kanban view and can only be seen by managers in its form view.
-'''
-class IntranetPost(models.Model):
+class IntranetPost(models.Model):   
+    '''
+    Used to display new's posts accessible by all users. Extends oks.intranet.document
+    and adds a post_category field to filter aid in filtering. It also adds an HTML
+    field used to display HTML content in it's form view. Its description is displayed
+    in its kanban view and can only be seen by managers in its form view.
+    '''
     _name = "oks.intranet.post"
     _inherit = "oks.intranet.document"
     _description = "Comunicado o notica de la intranet"
@@ -26,6 +26,10 @@ class IntranetPost(models.Model):
     extensions = fields.Many2many(store=False)
 
 class IntranetPostCategory(models.Model):
+    '''
+    Category that has no effect on record access. It is only meant as an organizational tool. The
+    color is rendered by Javascript and used on Kanban views.
+    '''
     _name = "oks.intranet.post.category"
 
     name = fields.Char(string="Nombre", required=True)
