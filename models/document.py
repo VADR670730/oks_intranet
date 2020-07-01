@@ -2,6 +2,8 @@ import os.path
 from ast import literal_eval
 from odoo import fields, models, api # pylint: disable=import-error
 
+SUPPORTED_EXTENSIONS = ('xls', 'xlsx', 'doc', 'docx', 'ppt', 'pptx')
+
 class Document(models.Model):
     '''
     This is the base class INHERITED by all models in this model. It contains basic
@@ -18,7 +20,7 @@ class Document(models.Model):
         return fields.Date.today()
 
     @api.depends("documents")
-    def compute_docs(self):
+    def compute_extensions(self):
         ext = self.env["oks.intranet.document.extension"].search([])
         for record in self:
             ext_ids = set()
@@ -28,6 +30,26 @@ class Document(models.Model):
                     if doc_ext == ex.name:
                         ext_ids.add(ex.id)
             record.extensions = [(6, 0, ext_ids)]
+
+    @api.depends("documents")
+    def convert_docs(self):
+        '''
+        Creates a pdf conversion of all office files (xlsx, docx, pptx and its older brothers)
+        and stores it in the filesystem to serve them when a user requests a preview in the web
+        client.
+        '''
+        # Check the feature is actually enabled
+        if self.env["res.config.settings"].sudo().get_param("oks_intranet.liboffice_convert") == False:
+            return
+
+        model_name = self._name.replace(".", ",")
+        for record in self:
+            for doc in record.documents:
+                if doc.name[doc.name.index(".") + 1:] in SUPPORTED_EXTENSIONS:
+                    vals = {"model_name": model_name, "record_id": record.id,
+                        "file_name": doc.name, "datas": doc.datas}
+                    self.env["oks.intranet.conversion"].create(vals)
+
 
     @api.model
     def get_doc_len(self, id, model):
@@ -54,7 +76,7 @@ class Document(models.Model):
     date = fields.Date(string="Publicado", readonly=True, default=_get_today_date)
     category = fields.Many2one(string="Categoria", comodel_name="oks.intranet.document.category", required=True)
     documents = fields.Many2many(string="Documentos", comodel_name="ir.attachment")
-    extensions = fields.Many2many(string="Extensiones de los archivos", readonly=True, compute=compute_docs, store=True, comodel_name="oks.intranet.document.extension")
+    extensions = fields.Many2many(string="Extensiones de los archivos", readonly=True, compute=compute_extensions, store=True, comodel_name="oks.intranet.document.extension")
 
 class DocumentCategory(models.Model):
     '''

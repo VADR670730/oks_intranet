@@ -19,16 +19,22 @@ class OksIntranetSettings(models.TransientModel):
 
     def set_values(self):
         res = super(OksIntranetSettings, self).set_values() 
-        self.env["ir.config_parameter"].set_param("oks_intranet.liboffice_convert", self.liboffice_convert)
-        self.env["ir.config_parameter"].set_param("oks_intranet.liboffice_path", self.liboffice_path)
-        self.env["ir.config_parameter"].set_param("oks_intranet.liboffice_conv_dir", self.liboffice_conv_dir)
+        if self.liboffice_path[:-1] != "/" or "\\":
+            self.liboffice_path += "/"
+        if self.liboffice_conv_dir[:-1] != "/" or "\\":
+            self.liboffice_conv_dir += "/"
+        
+        settings = self.env["ir.config_parameter"]
+        settings.set_param("oks_intranet.liboffice_convert", self.liboffice_convert)
+        settings.set_param("oks_intranet.liboffice_path", self.liboffice_path)
+        settings.set_param("oks_intranet.liboffice_conv_dir", self.liboffice_conv_dir)
         return res
 
     @api.model
     def get_values(self):
         res = super(OksIntranetSettings, self).get_values() 
         val = self.env["ir.config_parameter"].sudo()
-        convert = val.get_param("multicurrency.banxico_live")
+        convert = val.get_param("oks_intranet.liboffice_convert")
         path = val.get_param("oks_intranet.liboffice_path")
         conv_dir = val.get_param("oks_intranet.liboffice_conv_dir")
         res.update(
