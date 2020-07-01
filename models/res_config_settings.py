@@ -1,0 +1,39 @@
+from odoo import models, api, fields # pylint: disable=import-error
+
+class OksIntranetSettings(models.TransientModel):
+    '''
+    In order to preview Microsoft Office (xlsx, docx, pptx) the files 
+    must be converted to pdf first. To do so unoconv is used. It uses
+    LibreOffice (headless mode) to convert files. Unoconv must run
+    with the pre-installed python that LibreOffice came with. We must also
+    know where to store converted files so that we can serve them when requested.
+
+    This information (path to LibreOffice python and path where conversions will be
+    stored) must be set trough the settings.
+    '''
+    _inherit = "res.config.settings"
+
+    liboffice_convert = fields.Boolean()
+    liboffice_path = fields.Char()
+    liboffice_conv_dir = fields.Char()
+
+    def set_values(self):
+        res = super(OksIntranetSettings, self).set_values() 
+        self.env["ir.config_parameter"].set_param("oks_intranet.liboffice_convert", self.liboffice_convert)
+        self.env["ir.config_parameter"].set_param("oks_intranet.liboffice_path", self.liboffice_path)
+        self.env["ir.config_parameter"].set_param("oks_intranet.liboffice_conv_dir", self.liboffice_conv_dir)
+        return res
+
+    @api.model
+    def get_values(self):
+        res = super(OksIntranetSettings, self).get_values() 
+        val = self.env["ir.config_parameter"].sudo()
+        convert = val.get_param("multicurrency.banxico_live")
+        path = val.get_param("oks_intranet.liboffice_path")
+        conv_dir = val.get_param("oks_intranet.liboffice_conv_dir")
+        res.update(
+            liboffice_convert=convert,
+            liboffice_path=path,
+            liboffice_conv_dir=conv_dir
+            )
+        return res
