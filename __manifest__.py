@@ -7,7 +7,9 @@
         """,
 
     'description': """
-        Contains sections to publish company news, photos, documents and manuals.
+        Contains sections to publish company news, photos, documents and manuals. 
+        
+        Icon made by prettycons from www.flaticon.com
     """,
 
     'application': True,
@@ -20,6 +22,7 @@
     # for the full list
     'category': 'Human Resources',
     'version': '1.0',
+    'sequence': 99,
 
     # any module necessary for this one to work correctly
     'depends': ['base', 'hr'],
