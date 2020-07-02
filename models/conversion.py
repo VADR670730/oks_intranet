@@ -36,39 +36,43 @@ class OksIntranetConversion(models.Model):
         record_id = Id of the record which has this ir.attachment
         datas = Base64 encoded data of the file to be converted
         '''
-        settings = self.env["res.config.settings"].sudo()
-        root_path = settings.get_param("oks_intranet.liboffice_conv_dir")
-        base_path = root_path + vals["model_name"] + "/" + vals["record_id"] + "/"
+        existing = self.env["oks.intranet.conversion"].search([("model_name", "=", vals["model_name"]),
+            ("record_id", "=", vals["record_id"]), ("file_name", "=", vals["file_name"])]).id
+        if existing:
+            _logger.info("Conversion requested. File %s already exists. Aborting")
+            return
 
-        _logger.log("Conversion requested. File to be converted: %s\n"
-            "Conversion will be stored on: %s", vals["file_name"], base_path)
+        settings = self.env["ir.config_parameter"].sudo()
+        root_path = settings.get_param("oks_intranet.liboffice_conv_dir")
+        base_path = root_path + vals["model_name"] + "/" + str(vals["record_id"]) + "/"
+
+        _logger.info("Conversion requested. File to be converted: %s\nConversion will be stored on: %s",
+            vals["file_name"], base_path)
         # Temporarily write file into disk so it can be converted by unoconv.
         try:
             Path(base_path).mkdir(parents=True, exist_ok=True)
-            tmp_file = base_path + "tmp_" + vals["file_name"]
-            file_ptr = open(tmp_file, "w")
-            file_ptr.write(base64.b64decode(vals["datas"]).decode("utf-8"))
-            file_ptr.close()
+            tmp_file = base_path + vals["file_name"]
+            with open(tmp_file, "wb") as file_ptr:
+                file_ptr = open(tmp_file, "wb")
+                file_ptr.write(base64.b64decode(vals["datas"]))
 
             # Convert file
-            py_dir = settings.get_param("oks_intranet.liboffice_path")
-            py_dir += "python"
-            subprocess.run([py_dir, "unoconv.py", "-f", vals["file_name"], tmp_file])
+            liboffice = settings.get_param("oks_intranet.liboffice_path")
+            subprocess.run([liboffice + "python", liboffice + "unoconv.py", "-f", "pdf", tmp_file])
 
             # Delete temporary file
-            Path.unlink(tmp_file)
+            Path(tmp_file).unlink()
         except Exception as e:
-            _logger.log("Error during conversion. Aborting. Error code: %s", str(e))
+            _logger.info("Error during conversion. Aborting. Error code: %s", str(e))
             return
 
         # Create Odoo record.
-        res = super(OksIntranetConversion, self).create(vals)
         conv_name = vals["file_name"]
         conv_name = conv_name[:conv_name.index(".")] + ".pdf"
-        res.write({"file_name": vals["file_name"], "model_name": vals["model_name"], "record_id": vals["record_id"], 
-            "conversion_path": base_path + conv_name})
-        _logger.log("Successful conversion")
-        return res
+        vals["conversion_path"] = conv_name
+        del vals["datas"]
+        _logger.info("Successful conversion")
+        return super(OksIntranetConversion, self).create(vals)
 
     @api.model
     def drop_record(self, vals):
@@ -77,12 +81,12 @@ class OksIntranetConversion(models.Model):
         all conversions is deleted and all records representing said conversions are deleted too. Basically an
         ondelete=cascade coupled with deleting the converted files on the filesystem. 
         '''
-        _logger.log("Request to delete all conversions linked to %s with ID %s", vals["model_name"], vals["record_id"])
+        _logger.info("Request to delete all conversions linked to %s with ID %s", vals["model_name"], vals["record_id"])
         settings = self.env["res.config.settings"].sudo()
         root_path = settings.get_param("oks_intranet.liboffice_conv_dir")
         base_path = root_path + vals["model_name"] + "/" + vals["record_id"] + "/"
         try:
             shutil.rmtree(base_path)
         except Exception as e:
-            _logger("Could not remove conversions' folder. Aborting. Error code: %s", str(e))
+            _logger.info("Could not remove conversions' folder. Aborting. Error code: %s", str(e))
             return

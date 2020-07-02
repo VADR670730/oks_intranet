@@ -39,10 +39,10 @@ class Document(models.Model):
         client.
         '''
         # Check the feature is actually enabled
-        if self.env["res.config.settings"].sudo().get_param("oks_intranet.liboffice_convert") == False:
+        if self.env["ir.config_parameter"].sudo().get_param("oks_intranet.liboffice_convert") == False:
             return
 
-        model_name = self._name.replace(".", ",")
+        model_name = self._name.replace(".", "_")
         for record in self:
             for doc in record.documents:
                 if doc.name[doc.name.index(".") + 1:] in SUPPORTED_EXTENSIONS:
