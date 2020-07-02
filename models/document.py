@@ -1,3 +1,6 @@
+import base64
+import logging
+import traceback
 import os.path
 from ast import literal_eval
 from odoo import fields, models, api # pylint: disable=import-error
@@ -21,35 +24,34 @@ class Document(models.Model):
 
     @api.depends("documents")
     def compute_extensions(self):
-        ext = self.env["oks.intranet.document.extension"].search([])
-        for record in self:
-            ext_ids = set()
-            for doc in record.documents:
-                doc_ext = os.path.splitext(doc.name)[1][1:]
-                for ex in ext:
-                    if doc_ext == ex.name:
-                        ext_ids.add(ex.id)
-            record.extensions = [(6, 0, ext_ids)]
-
-    @api.depends("documents")
-    def convert_docs(self):
-        '''
-        Creates a pdf conversion of all office files (xlsx, docx, pptx and its older brothers)
-        and stores it in the filesystem to serve them when a user requests a preview in the web
-        client.
-        '''
-        # Check the feature is actually enabled
-        if self.env["ir.config_parameter"].sudo().get_param("oks_intranet.liboffice_convert") == False:
-            return
-
+        conv_enabled = self.env["ir.config_parameter"].sudo().get_param("oks_intranet.liboffice_convert")
         model_name = self._name.replace(".", "_")
-        for record in self:
-            for doc in record.documents:
-                if doc.name[doc.name.index(".") + 1:] in SUPPORTED_EXTENSIONS:
-                    vals = {"model_name": model_name, "record_id": record.id,
-                        "file_name": doc.name, "datas": doc.datas}
-                    self.env["oks.intranet.conversion"].create(vals)
+        conversion = self.env["oks.intranet.conversion"]
+        ext = self.env["oks.intranet.document.extension"].search([])
 
+        if conv_enabled:
+            for record in self:
+                ext_ids = set()
+                for doc in record.documents:
+                    if doc.name[doc.name.index(".") + 1:] in SUPPORTED_EXTENSIONS:
+                        vals = {"model_name": model_name, "record_id": record.id,
+                            "file_name": doc.name, "datas": doc.datas}
+                        conversion.create(vals)
+                        
+                    doc_ext = os.path.splitext(doc.name)[1][1:]
+                    for ex in ext:
+                        if doc_ext == ex.name:
+                            ext_ids.add(ex.id)
+                    record.extensions = [(6, 0, ext_ids)]
+        else:
+            for record in self:
+                ext_ids = set()
+                for doc in record.documents:
+                    doc_ext = os.path.splitext(doc.name)[1][1:]
+                    for ex in ext:
+                        if doc_ext == ex.name:
+                            ext_ids.add(ex.id)
+                record.extensions = [(6, 0, ext_ids)]
 
     @api.model
     def get_doc_len(self, id, model):
@@ -59,12 +61,28 @@ class Document(models.Model):
     @api.model
     def get_img64(self, id, model, index):
         '''
-        Method called by the Javascript preview widget. It returns the base64 binary content of the attachment.
+        Method called by the Javascript preview widget. It returns the base64 binary content of the attachment. 
+        If the file is a Microsoft Office file (any file with a supported extension) it looks for its pdf
+        representation and returns that instead.
         '''
         res = self.env[model].search([("id", "=", id)])[0]
         size = len(res.documents)
         if size > 0 and index < size:
-            return (res.documents[index].name, res.documents[index].datas)
+            doc = res.documents[index]
+            extension = doc.name[doc.name.index(".") + 1:]
+            if extension in SUPPORTED_EXTENSIONS:          
+                try:
+                    model_name = self._name.replace(".", "_")
+                    conversion = self.env["oks.intranet.conversion"].search([("model_name", "=", model_name),
+                        ("record_id", "=", id), ("file_name", "=", doc.name)])[0]
+                    with open(conversion.conversion_path, "rb") as fl:
+                        datas = base64.b64encode(fl.read())
+                        return (doc.name, datas)
+                except:
+                    traceback.print_exc()
+                    return -1
+            else:
+                return (doc.name, doc.datas)
         else:
             return -1
             

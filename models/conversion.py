@@ -2,6 +2,7 @@ import base64
 import logging
 import shutil
 import subprocess
+import traceback
 from pathlib import Path
 from odoo import fields, api, models # pylint: disable=import-error
 
@@ -39,7 +40,7 @@ class OksIntranetConversion(models.Model):
         existing = self.env["oks.intranet.conversion"].search([("model_name", "=", vals["model_name"]),
             ("record_id", "=", vals["record_id"]), ("file_name", "=", vals["file_name"])]).id
         if existing:
-            _logger.info("Conversion requested. File %s already exists. Aborting")
+            _logger.info("Conversion requested. File %s already exists. Aborting", vals["file_name"])
             return
 
         settings = self.env["ir.config_parameter"].sudo()
@@ -60,16 +61,17 @@ class OksIntranetConversion(models.Model):
             liboffice = settings.get_param("oks_intranet.liboffice_path")
             subprocess.run([liboffice + "python", liboffice + "unoconv.py", "-f", "pdf", tmp_file])
 
-            # Delete temporary file
-            Path(tmp_file).unlink()
+            # TODO Delete temporary file. For some reason the file remains locked.
+            # Path(tmp_file).unlink()
         except Exception as e:
+            traceback.print_exc()
             _logger.info("Error during conversion. Aborting. Error code: %s", str(e))
             return
 
         # Create Odoo record.
         conv_name = vals["file_name"]
         conv_name = conv_name[:conv_name.index(".")] + ".pdf"
-        vals["conversion_path"] = conv_name
+        vals["conversion_path"] = base_path + conv_name
         del vals["datas"]
         _logger.info("Successful conversion")
         return super(OksIntranetConversion, self).create(vals)

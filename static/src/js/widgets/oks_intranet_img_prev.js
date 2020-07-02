@@ -19,6 +19,8 @@
 odoo.define("oks_intranet.Photos", function(require) {
     "use strict";
 
+    var SUPPORTED_EXTENSIONS = ["docx", "doc", "ppt", "pptx", "xls", "xlsx", "pdf"]
+
     var Core = require("web.core");
     var Qweb = Core.qweb;
     var Widget= require("web.Widget");
@@ -102,7 +104,9 @@ odoo.define("oks_intranet.Photos", function(require) {
                 model: "oks.intranet.document", method: "get_img64",
                 args: [this.recordId, this.modelName, this.index]}).then(function(val) {
                     var fileName = val[0].substring(0, 1).toUpperCase() + val[0].substring(1, val[0].indexOf("."));
-                    if(val[0].substring(val[0].indexOf(".")) == ".pdf") {
+                    var extension = val[0].substring(val[0].indexOf(".") + 1);
+                    console.log(extension)
+                    if(SUPPORTED_EXTENSIONS.indexOf(extension) >= 0) {
                         self.pdfView.attr("src", "data:application/pdf;base64," + val[1]);
                         self.pdfView.attr("name", fileName);
                         self.img.hide();
