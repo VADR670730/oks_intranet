@@ -19,9 +19,9 @@ class OksIntranetSettings(models.TransientModel):
 
     def set_values(self):
         res = super(OksIntranetSettings, self).set_values() 
-        if self.liboffice_path[:-1] != "/" or "\\":
+        if self.liboffice_path and self.liboffice_path[:-1] != "/" or "\\":
             self.liboffice_path += "/"
-        if self.liboffice_conv_dir[:-1] != "/" or "\\":
+        if self.liboffice_conv_dir and self.liboffice_conv_dir[:-1] != "/" or "\\":
             self.liboffice_conv_dir += "/"
         
         settings = self.env["ir.config_parameter"]

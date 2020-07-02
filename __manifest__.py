@@ -29,6 +29,7 @@
         'security/intranet_security.xml',
         'security/ir.model.access.csv',
         'views/assets.xml',
+        'views/settings_views.xml',
         'views/post_views.xml',
         'views/document_views.xml',
         'views/photos_views.xml',

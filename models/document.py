@@ -78,6 +78,18 @@ class Document(models.Model):
     documents = fields.Many2many(string="Documentos", comodel_name="ir.attachment")
     extensions = fields.Many2many(string="Extensiones de los archivos", readonly=True, compute=compute_extensions, store=True, comodel_name="oks.intranet.document.extension")
 
+    @api.multi
+    def unlink(self):
+        '''
+        Deletes all conversions attached with the record. Poor man's ondelete=cascade
+        '''
+        conversions = self.env["oks.intranet.conversion"]
+        model_name = self._name.replace(".", "_")
+        for record in self:
+            conversions.drop_record({"model_name": model_name, "record_id": record.id})
+        return super(Document, self).unlink()
+            
+
 class DocumentCategory(models.Model):
     '''
     This model is used to filter access to oks.intranet.document records based on the group

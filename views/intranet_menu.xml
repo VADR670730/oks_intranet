@@ -52,6 +52,17 @@
             <field name="view_mode">tree,form</field>
         </record>
 
+        <record id="settings_action" model="ir.actions.act_window">
+            <field name="name">Ajustes</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.config.settings</field>
+            <field name="view_id" ref="res_config_settings_view_form"/>
+            <field name="view_mode">form</field>
+            <field name="target">inline</field>
+            <field name="context">{'module': 'oks_intranet'}</field>
+        </record>
+
+
         <menuitem name="One Key News"
             id="intranet_root_menu"
             parent=""
@@ -119,6 +130,14 @@
             action="doc_cat_action"
             sequence="4"
             groups="oks_intranet.intranet_manager"
+        />
+
+        <menuitem id="settings_menu"
+            name="Ajustes"
+            parent="intranet_root_menu"
+            action="settings_action"
+            sequence="2"
+            groups="base.user_root"
         />
     </data>
 </odoo>

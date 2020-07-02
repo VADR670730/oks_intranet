@@ -1,7 +1,11 @@
 import base64
+import logging
+import shutil
 import subprocess
 from pathlib import Path
 from odoo import fields, api, models # pylint: disable=import-error
+
+_logger = logging.getLogger(__name__)
 
 class OksIntranetConversion(models.Model):
     '''
@@ -35,27 +39,50 @@ class OksIntranetConversion(models.Model):
         settings = self.env["res.config.settings"].sudo()
         root_path = settings.get_param("oks_intranet.liboffice_conv_dir")
         base_path = root_path + vals["model_name"] + "/" + vals["record_id"] + "/"
-        Path(base_path).mkdir(parents=True, exist_ok=True)
 
+        _logger.log("Conversion requested. File to be converted: %s\n"
+            "Conversion will be stored on: %s", vals["file_name"], base_path)
         # Temporarily write file into disk so it can be converted by unoconv.
-        tmp_file = base_path + "tmp_" + vals["file_name"]
-        file_ptr = open(tmp_file, "w")
-        file_ptr.write(base64.b64decode(vals["datas"]).decode("utf-8"))
-        file_ptr.close()
+        try:
+            Path(base_path).mkdir(parents=True, exist_ok=True)
+            tmp_file = base_path + "tmp_" + vals["file_name"]
+            file_ptr = open(tmp_file, "w")
+            file_ptr.write(base64.b64decode(vals["datas"]).decode("utf-8"))
+            file_ptr.close()
 
-        # Convert file
-        py_dir = settings.get_param("oks_intranet.liboffice_path")
-        py_dir += "python"
-        subprocess.run([py_dir, "unoconv.py", "-f", vals["file_name"], tmp_file])
+            # Convert file
+            py_dir = settings.get_param("oks_intranet.liboffice_path")
+            py_dir += "python"
+            subprocess.run([py_dir, "unoconv.py", "-f", vals["file_name"], tmp_file])
 
-        # Delete temporary file
-        Path.unlink(tmp_file)
+            # Delete temporary file
+            Path.unlink(tmp_file)
+        except Exception as e:
+            _logger.log("Error during conversion. Aborting. Error code: %s", str(e))
+            return
 
         # Create Odoo record.
         res = super(OksIntranetConversion, self).create(vals)
         conv_name = vals["file_name"]
         conv_name = conv_name[:conv_name.index(".")] + ".pdf"
-        conv_name = base_path
         res.write({"file_name": vals["file_name"], "model_name": vals["model_name"], "record_id": vals["record_id"], 
             "conversion_path": base_path + conv_name})
+        _logger.log("Successful conversion")
         return res
+
+    @api.model
+    def drop_record(self, vals):
+        '''
+        Called when a record that stores documents (and therefore conversions) is deleted. The whole folder containing
+        all conversions is deleted and all records representing said conversions are deleted too. Basically an
+        ondelete=cascade coupled with deleting the converted files on the filesystem. 
+        '''
+        _logger.log("Request to delete all conversions linked to %s with ID %s", vals["model_name"], vals["record_id"])
+        settings = self.env["res.config.settings"].sudo()
+        root_path = settings.get_param("oks_intranet.liboffice_conv_dir")
+        base_path = root_path + vals["model_name"] + "/" + vals["record_id"] + "/"
+        try:
+            shutil.rmtree(base_path)
+        except Exception as e:
+            _logger("Could not remove conversions' folder. Aborting. Error code: %s", str(e))
+            return
