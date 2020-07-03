@@ -1,6 +1,6 @@
 from odoo import models, fields, api # pylint: disable=import-error
 
-class Photos(models.Model):
+class IntranetPhotos(models.Model):
     '''
     Practically the same as oks.intranet.document. Adds an extra field to work as thumbnail in kanban views.
     '''

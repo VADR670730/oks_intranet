@@ -1,6 +1,6 @@
 from odoo import models, api, fields # pylint: disable=import-error
 
-class OksIntranetSettings(models.TransientModel):
+class IntranetSettings(models.TransientModel):
     '''
     In order to preview Microsoft Office (xlsx, docx, pptx) the files 
     must be converted to pdf first. To do so unoconv is used. It uses
@@ -18,7 +18,7 @@ class OksIntranetSettings(models.TransientModel):
     liboffice_conv_dir = fields.Char()
 
     def set_values(self):
-        res = super(OksIntranetSettings, self).set_values() 
+        res = super(IntranetSettings, self).set_values() 
 
         if self.liboffice_path and self.liboffice_path[-1] != "/":
             self.liboffice_path += "/"
@@ -34,7 +34,7 @@ class OksIntranetSettings(models.TransientModel):
 
     @api.model
     def get_values(self):
-        res = super(OksIntranetSettings, self).get_values() 
+        res = super(IntranetSettings, self).get_values() 
         val = self.env["ir.config_parameter"].sudo()
         convert = val.get_param("oks_intranet.liboffice_convert")
         path = val.get_param("oks_intranet.liboffice_path")

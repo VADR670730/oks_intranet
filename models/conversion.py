@@ -8,7 +8,7 @@ from odoo import fields, api, models # pylint: disable=import-error
 
 _logger = logging.getLogger(__name__)
 
-class OksIntranetConversion(models.Model):
+class IntranetConversion(models.Model):
     '''
     This class is used to represent an Office document (docx, xlsx or pptx) that
     has been uploaded as an attachment to an oks.intranet.document record and has
@@ -27,6 +27,36 @@ class OksIntranetConversion(models.Model):
     conversion_path = fields.Char(required=True)
 
     @api.model
+    def compute_conversions(self, vals):
+        '''
+        Called to update the converted files on any record. Called by default when oks.intranet.document
+        or any of its childs are created or updated.
+        '''
+        _logger.info("Computing file conversions for %s ID(%s)", vals["model_name"], str(vals["record_id"]))
+        conv_obj = self.env["oks.intranet.conversion"]
+        conversions = conv_obj.search([("model_name", "=", vals["model_name"]),
+        ("record_id", "=", str(vals["record_id"]))])
+        conversion_names = []
+        doc_names = []
+        for conv in conversions:
+            conversion_names.append(conv.file_name)
+        
+        for doc in vals["documents"]:
+            doc_names.append(doc.name)
+            if doc.name not in conversion_names:
+                vals["datas"] = doc.datas
+                vals["file_name"] = doc.name
+                conv_obj.create(vals)
+
+        # No idea how to append the records to this list upon creation so in the meantime I will just have to query
+        # the whole thing again.
+        conversions = conv_obj.search([("model_name", "=", vals["model_name"]),
+        ("record_id", "=", str(vals["record_id"]))])
+        for conv in conversions:
+            if conv.file_name not in doc_names:
+                conv.unlink()
+
+    @api.model
     def create(self, vals):
         '''
         Converts the file (ir.attachment) passed trough the parameters into a pdf and creates
@@ -37,12 +67,6 @@ class OksIntranetConversion(models.Model):
         record_id = Id of the record which has this ir.attachment
         datas = Base64 encoded data of the file to be converted
         '''
-        existing = self.env["oks.intranet.conversion"].search([("model_name", "=", vals["model_name"]),
-            ("record_id", "=", vals["record_id"]), ("file_name", "=", vals["file_name"])]).id
-        if existing:
-            _logger.info("Conversion requested. File %s already exists. Aborting", vals["file_name"])
-            return
-
         settings = self.env["ir.config_parameter"].sudo()
         root_path = settings.get_param("oks_intranet.liboffice_conv_dir")
         base_path = root_path + vals["model_name"] + "/" + str(vals["record_id"]) + "/"
@@ -64,8 +88,8 @@ class OksIntranetConversion(models.Model):
             # TODO Delete temporary file. For some reason the file remains locked.
             # Path(tmp_file).unlink()
         except Exception as e:
-            traceback.print_exc()
             _logger.info("Error during conversion. Aborting. Error code: %s", str(e))
+            traceback.print_exc()
             return
 
         # Create Odoo record.
@@ -74,7 +98,20 @@ class OksIntranetConversion(models.Model):
         vals["conversion_path"] = base_path + conv_name
         del vals["datas"]
         _logger.info("Successful conversion")
-        return super(OksIntranetConversion, self).create(vals)
+        return super(IntranetConversion, self).create(vals)
+
+    @api.multi
+    def unlink(self):
+        '''
+        Deletes the converted file it referenced before the record is deleted
+        from the db.
+        '''
+        for record in self:
+            try:
+                Path(record.conversion_path).unlink()
+            except FileNotFoundError:
+                pass
+        return super(IntranetConversion, self).unlink()
 
     @api.model
     def drop_record(self, vals):
@@ -84,9 +121,13 @@ class OksIntranetConversion(models.Model):
         ondelete=cascade coupled with deleting the converted files on the filesystem. 
         '''
         _logger.info("Request to delete all conversions linked to %s with ID %s", vals["model_name"], vals["record_id"])
-        settings = self.env["res.config.settings"].sudo()
+        conversions = self.env["oks.intranet.conversion"].search([("model_name", "=", vals["model_name"]), ("record_id", "=", vals["record_id"])])
+        conversions.unlink()
+        _logger.info("All conversions and records referencing them have been deleted")
+
+        settings = self.env["ir.config_parameter"].sudo()
         root_path = settings.get_param("oks_intranet.liboffice_conv_dir")
-        base_path = root_path + vals["model_name"] + "/" + vals["record_id"] + "/"
+        base_path = root_path + vals["model_name"] + "/" + str(vals["record_id"]) + "/"
         try:
             shutil.rmtree(base_path)
         except Exception as e:

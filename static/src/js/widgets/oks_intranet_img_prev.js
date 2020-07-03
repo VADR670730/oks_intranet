@@ -14,7 +14,10 @@
  * <span id="oks_intranet_model">your.model.name</span>
  * 
  * The widget adds a "Preview files" button which upon click displays a modal
- * box with the files attached to the record. Currently it only works with images.
+ * box with the files attached to the record. It is capable of displaying 
+ * images and pdf files. Microsoft Office files can also be previewed
+ * (feature is enabled on settings) but it needs LibreOffice to make a pdf
+ * copy of said files to be used in this preview.
  */
 odoo.define("oks_intranet.Photos", function(require) {
     "use strict";
@@ -105,10 +108,8 @@ odoo.define("oks_intranet.Photos", function(require) {
                 args: [this.recordId, this.modelName, this.index]}).then(function(val) {
                     var fileName = val[0].substring(0, 1).toUpperCase() + val[0].substring(1, val[0].indexOf("."));
                     var extension = val[0].substring(val[0].indexOf(".") + 1);
-                    console.log(extension)
                     if(SUPPORTED_EXTENSIONS.indexOf(extension) >= 0) {
                         self.pdfView.attr("src", "data:application/pdf;base64," + val[1]);
-                        self.pdfView.attr("name", fileName);
                         self.img.hide();
                         self.imgName.hide();
                         self.pdfView.show();

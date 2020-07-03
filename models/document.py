@@ -7,9 +7,11 @@ from odoo import fields, models, api # pylint: disable=import-error
 
 SUPPORTED_EXTENSIONS = ('xls', 'xlsx', 'doc', 'docx', 'ppt', 'pptx')
 
-class Document(models.Model):
+_logger = logging.getLogger(__name__)
+
+class IntranetDocument(models.Model):
     '''
-    This is the base class INHERITED by all models in this model. It contains basic
+    This is the base class INHERITED by all models in this module. It contains basic
     functionality to restrict access to records based on category and most importantly, 
     it interacts with the oks_intranet_img_prev widget which uses XMLRPC calls to send
     the documents' base64 content to the javascript client so that they can be rendered
@@ -24,34 +26,15 @@ class Document(models.Model):
 
     @api.depends("documents")
     def compute_extensions(self):
-        conv_enabled = self.env["ir.config_parameter"].sudo().get_param("oks_intranet.liboffice_convert")
-        model_name = self._name.replace(".", "_")
-        conversion = self.env["oks.intranet.conversion"]
-        ext = self.env["oks.intranet.document.extension"].search([])
-
-        if conv_enabled:
-            for record in self:
-                ext_ids = set()
-                for doc in record.documents:
-                    if doc.name[doc.name.index(".") + 1:] in SUPPORTED_EXTENSIONS:
-                        vals = {"model_name": model_name, "record_id": record.id,
-                            "file_name": doc.name, "datas": doc.datas}
-                        conversion.create(vals)
-                        
-                    doc_ext = os.path.splitext(doc.name)[1][1:]
-                    for ex in ext:
-                        if doc_ext == ex.name:
-                            ext_ids.add(ex.id)
-                    record.extensions = [(6, 0, ext_ids)]
-        else:
-            for record in self:
-                ext_ids = set()
-                for doc in record.documents:
-                    doc_ext = os.path.splitext(doc.name)[1][1:]
-                    for ex in ext:
-                        if doc_ext == ex.name:
-                            ext_ids.add(ex.id)
-                record.extensions = [(6, 0, ext_ids)]
+        ext = self.env["oks.intranet.document.extension"].search([])     
+        for record in self:
+            ext_ids = set()
+            for doc in record.documents:
+                doc_ext = os.path.splitext(doc.name)[1][1:]
+                for ex in ext:
+                    if doc_ext == ex.name:
+                        ext_ids.add(ex.id)
+            record.extensions = [(6, 0, ext_ids)]
 
     @api.model
     def get_doc_len(self, id, model):
@@ -70,10 +53,10 @@ class Document(models.Model):
         if size > 0 and index < size:
             doc = res.documents[index]
             extension = doc.name[doc.name.index(".") + 1:]
-            if extension in SUPPORTED_EXTENSIONS:          
+            conv_enabled = self.env["ir.config_parameter"].sudo().get_param("oks_intranet.liboffice_convert")
+            if conv_enabled and extension in SUPPORTED_EXTENSIONS:         
                 try:
-                    model_name = self._name.replace(".", "_")
-                    conversion = self.env["oks.intranet.conversion"].search([("model_name", "=", model_name),
+                    conversion = self.env["oks.intranet.conversion"].search([("model_name", "=", model.replace(".", "_")),
                         ("record_id", "=", id), ("file_name", "=", doc.name)])[0]
                     with open(conversion.conversion_path, "rb") as fl:
                         datas = base64.b64encode(fl.read())
@@ -96,6 +79,31 @@ class Document(models.Model):
     documents = fields.Many2many(string="Documentos", comodel_name="ir.attachment")
     extensions = fields.Many2many(string="Extensiones de los archivos", readonly=True, compute=compute_extensions, store=True, comodel_name="oks.intranet.document.extension")
 
+    @api.model
+    def create(self, vals):
+        conv_enabled = self.env["ir.config_parameter"].sudo().get_param("oks_intranet.liboffice_convert")
+        res = super(IntranetDocument, self).create(vals)
+        if conv_enabled:
+            self.env["oks.intranet.conversion"].compute_conversions({"model_name": res._name.replace(".", "_"),
+                "record_id": res.id, "documents": res.documents})
+        return res
+
+    @api.multi
+    def write(self, vals):
+        '''
+        The write method is overriden to perform any file conversions if necessary. This ensures that 
+        file conversions are performed in any childs of this class too.
+        '''
+        conv_enabled = self.env["ir.config_parameter"].sudo().get_param("oks_intranet.liboffice_convert")
+        model_name = self._name.replace(".", "_")
+        conversion = self.env["oks.intranet.conversion"]
+        res = super(IntranetDocument, self).write(vals)
+        if conv_enabled:
+            for record in self:
+                conversion.compute_conversions({"model_name": model_name, "record_id": record.id,
+                    "documents": record.documents})
+        return res
+
     @api.multi
     def unlink(self):
         '''
@@ -105,8 +113,7 @@ class Document(models.Model):
         model_name = self._name.replace(".", "_")
         for record in self:
             conversions.drop_record({"model_name": model_name, "record_id": record.id})
-        return super(Document, self).unlink()
-            
+        return super(IntranetDocument, self).unlink()   
 
 class DocumentCategory(models.Model):
     '''
