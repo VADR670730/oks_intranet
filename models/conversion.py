@@ -21,10 +21,16 @@ class IntranetConversion(models.Model):
     _name = "oks.intranet.conversion"
     _description = "PDF File used to preview Office files"
 
+    def compute_conv_path(self):
+        root_path = self.env["ir.config_parameter"].sudo().get_param("oks_intranet.liboffice_conv_dir")
+        for record in self:
+            base_path = root_path + record.model_name + "/" + str(record.record_id) + "/"
+            record.conversion_path = base_path + record.file_name[:record.file_name.index(".")] + ".pdf"
+
     file_name = fields.Char(required=True)
     model_name = fields.Char(required=True)
     record_id = fields.Integer(required=True)
-    conversion_path = fields.Char(required=True)
+    conversion_path = fields.Char(store=False, compute=compute_conv_path)
 
     @api.model
     def compute_conversions(self, vals):
@@ -93,10 +99,6 @@ class IntranetConversion(models.Model):
             return
 
         # Create Odoo record.
-        conv_name = vals["file_name"]
-        conv_name = conv_name[:conv_name.index(".")] + ".pdf"
-        vals["conversion_path"] = base_path + conv_name
-        del vals["datas"]
         _logger.info("Successful conversion")
         return super(IntranetConversion, self).create(vals)
 
