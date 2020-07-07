@@ -6,6 +6,7 @@ from ast import literal_eval
 from odoo import fields, models, api # pylint: disable=import-error
 
 SUPPORTED_EXTENSIONS = ('xls', 'xlsx', 'doc', 'docx', 'ppt', 'pptx')
+EMBEEDED_VIDEO_EXT = "oksvid"
 
 _logger = logging.getLogger(__name__)
 
@@ -64,6 +65,9 @@ class IntranetDocument(models.Model):
                 except:
                     traceback.print_exc()
                     return -1
+            elif extension == EMBEEDED_VIDEO_EXT:
+                url = base64.b64decode(doc.datas).decode("UTF-8")
+                return (doc.name, url)
             else:
                 return (doc.name, doc.datas)
         else:

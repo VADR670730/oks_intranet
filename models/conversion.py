@@ -4,6 +4,7 @@ import shutil
 import subprocess
 import time
 import traceback
+from . import document
 from pathlib import Path
 from odoo import fields, api, models # pylint: disable=import-error
 
@@ -51,9 +52,10 @@ class IntranetConversion(models.Model):
         for doc in vals["documents"]:
             doc_names.append(doc.name)
             if doc.name not in conversion_names:
-                vals["datas"] = doc.datas
-                vals["file_name"] = doc.name
-                conv_obj.create(vals)
+                if doc.name[doc.name.index(".") + 1:] in document.SUPPORTED_EXTENSIONS:
+                    vals["datas"] = doc.datas
+                    vals["file_name"] = doc.name
+                    conv_obj.create(vals)
 
         # No idea how to append the records to this list upon creation so in the meantime I will just have to query
         # the whole thing again.

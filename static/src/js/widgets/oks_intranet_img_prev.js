@@ -23,6 +23,7 @@ odoo.define("oks_intranet.Photos", function(require) {
     "use strict";
 
     var SUPPORTED_EXTENSIONS = ["docx", "doc", "ppt", "pptx", "xls", "xlsx", "pdf"]
+    var EMBEEDED_VIDEO_EXT = "oksvid"
 
     var Core = require("web.core");
     var Qweb = Core.qweb;
@@ -79,6 +80,7 @@ odoo.define("oks_intranet.Photos", function(require) {
             this.imgDiv.css("display", "flex");
         },
         close_evt: async function() {
+            this.pdfView.attr("src", "");
             this.imgDiv.hide();
         },
         back_evt: async function() {
@@ -110,6 +112,12 @@ odoo.define("oks_intranet.Photos", function(require) {
                     var extension = val[0].substring(val[0].indexOf(".") + 1);
                     if(SUPPORTED_EXTENSIONS.indexOf(extension) >= 0) {
                         self.pdfView.attr("src", "data:application/pdf;base64," + val[1]);
+                        self.img.hide();
+                        self.imgName.hide();
+                        self.pdfView.show();
+                    }
+                    else if(extension == EMBEEDED_VIDEO_EXT) {
+                        self.pdfView.attr("src", val[1])
                         self.img.hide();
                         self.imgName.hide();
                         self.pdfView.show();
