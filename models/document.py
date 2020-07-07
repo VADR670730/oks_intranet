@@ -78,7 +78,7 @@ class IntranetDocument(models.Model):
     user_in_charge = fields.Many2one(string="Encargado", comodel_name="hr.employee", required=True)
     is_manual = fields.Boolean(string="Es manual", default=False)
     allowed_groups = fields.Many2many(comodel_name="res.groups", related="category.groups", store=False)
-    date = fields.Date(string="Publicado", readonly=True, default=_get_today_date)
+    date = fields.Date(string="Publicado", default=_get_today_date)
     category = fields.Many2one(string="Categoria", comodel_name="oks.intranet.document.category", required=True)
     documents = fields.Many2many(string="Documentos", comodel_name="ir.attachment")
     extensions = fields.Many2many(string="Extensiones de los archivos", readonly=True, compute=compute_extensions, store=True, comodel_name="oks.intranet.document.extension")

@@ -21,9 +21,7 @@
 
 .oks_intranet_post_div {
     align-items: center;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+    display: grid;
     justify-content: center;
 }
 
