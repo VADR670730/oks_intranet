@@ -2,6 +2,7 @@ import base64
 import logging
 import shutil
 import subprocess
+import time
 import traceback
 from pathlib import Path
 from odoo import fields, api, models # pylint: disable=import-error
@@ -80,9 +81,9 @@ class IntranetConversion(models.Model):
         _logger.info("Conversion requested. File to be converted: %s\nConversion will be stored on: %s",
             vals["file_name"], base_path)
         # Temporarily write file into disk so it can be converted by unoconv.
+        tmp_file = base_path + vals["file_name"]
         try:
             Path(base_path).mkdir(parents=True, exist_ok=True)
-            tmp_file = base_path + vals["file_name"]
             with open(tmp_file, "wb") as file_ptr:
                 file_ptr = open(tmp_file, "wb")
                 file_ptr.write(base64.b64decode(vals["datas"]))
@@ -90,13 +91,17 @@ class IntranetConversion(models.Model):
             # Convert file
             liboffice = settings.get_param("oks_intranet.liboffice_path")
             subprocess.run([liboffice + "python", liboffice + "unoconv.py", "-f", "pdf", tmp_file])
-
-            # TODO Delete temporary file. For some reason the file remains locked.
-            # Path(tmp_file).unlink()
         except Exception as e:
             _logger.info("Error during conversion. Aborting. Error code: %s", str(e))
             traceback.print_exc()
             return
+
+        # On Linux (tested on Debian 10) there is no problem with file locks
+        # but the file always seems to be locked on Windows.
+        try:
+            Path(tmp_file).unlink()
+        except:
+            pass
 
         # Create Odoo record.
         _logger.info("Successful conversion")
