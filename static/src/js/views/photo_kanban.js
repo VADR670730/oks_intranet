@@ -12,6 +12,18 @@ odoo.define("oks_intranet.PhotoKanban", function(require) {
     var KanbanRenderer = require("web.KanbanRenderer");
     var KanbanController = require("web.KanbanController");
 
+    var PhotoRenderer = KanbanRenderer.extend({
+        _render: function() {
+            var self = this;
+            return this._super.apply(this, arguments).then(function() {
+                    var ghosts = self.$el.find(".o_kanban_ghost");
+                    ghosts.each(function(index) {
+                        $(this).addClass("oks_intranet_photo_kanban_cont");
+                    });
+                });
+        }
+    });
+
     /**
      * This view can be extended and have its loadParams.limit modified to a number that better
      * fits the model. It will still keep its masonry layout.
@@ -19,7 +31,7 @@ odoo.define("oks_intranet.PhotoKanban", function(require) {
     var PhotoKanban = KanbanView.extend({
         config: _.extend({}, KanbanView.prototype.config, {
             Model: KanbanModel,
-            Renderer: KanbanRenderer,
+            Renderer: PhotoRenderer,
             Controller: KanbanController,
         }),
         init: function() {
