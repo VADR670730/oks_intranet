@@ -16,7 +16,7 @@ class IntranetPost(models.Model):
         return self.env.ref("oks_intranet.document_cat_general")
 
     post_category = fields.Many2one(comodel_name="oks.intranet.post.category", string="Categoría", required=True)
-    text_content = fields.Html()
+    text_content = fields.Html(sanitize=False)
 
     # Overwrite unused fields inherited from model
     # No need to save this field anymore. It will always be the same.

@@ -47,6 +47,7 @@
     grid-row-start: 2;
     grid-row-end: 3;
     font-size: 1.8em;
+    padding-top: 10px;
 }
 
 .oks_intranet_post_kanban_title > hr {
