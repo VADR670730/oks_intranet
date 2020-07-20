@@ -9,6 +9,8 @@ odoo.define("oks_intranet.PostKanban", function(require) {
     var KanbanRenderer = require("web.KanbanRenderer");
     var KanbanController = require("web.KanbanController");
 
+    var KANBAN_POST_CLASS = "oks_intranet_post_kanban_cont";
+
     /**
      * t-afft-style should be able to do this directly on the kanban view
      * but it is not working. Hopefully this is just a temporary bandaid while I 
@@ -19,11 +21,15 @@ odoo.define("oks_intranet.PostKanban", function(require) {
             var self = this;
             return this._super.apply(this, arguments).then(function() {
                 self._rpc({model: "oks.intranet.post.category", method: "get_colors", args:[]}).then(function(val) {
-                    var posts = self.$el.find(".oks_intranet_post_kanban_cont");
-                    console.log(posts);
+                    var posts = self.$el.find("." + KANBAN_POST_CLASS);
                     posts.each(function(index) {
                         var cat = $(this).find(".oks_intranet_post_kanban_details").find("span")[0];
                         $(cat).css("background-color", val[$(cat).text()]);
+                    });
+
+                    var ghosts = self.$el.find(".o_kanban_ghost");
+                    ghosts.each(function(index) {
+                        $(this).addClass(KANBAN_POST_CLASS);
                     });
                 });
                 
