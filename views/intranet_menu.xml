@@ -2,7 +2,7 @@
 <odoo>
     <data>
         <record id="post_action" model="ir.actions.act_window">
-            <field name="name">Noticias</field>
+            <field name="name">Actualidad</field>
             <field name="res_model">oks.intranet.post</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,kanban,form</field>
@@ -17,7 +17,7 @@
         </record>
         
         <record id="photo_action" model="ir.actions.act_window">
-            <field name="name">Fotos</field>
+            <field name="name">Momentos OneKey</field>
             <field name="res_model">oks.intranet.photos</field>
             <field name="view_type">form</field>
             <field name="view_mode">kanban,form</field>
@@ -59,7 +59,7 @@
         </record>
 
 
-        <menuitem name="One Key News"
+        <menuitem name="En OneKey"
             id="intranet_root_menu"
             parent=""
             groups="oks_intranet.intranet_user"
@@ -67,14 +67,14 @@
         />
 
         <menuitem id="post_menu_root"
-            name="Noticias"
+            name="Actualidad"
             parent="intranet_root_menu"
             sequence="2"
             groups="oks_intranet.intranet_user"
         />
 
         <menuitem id="post_menu"
-            name="Noticias"
+            name="Actualidad"
             parent="post_menu_root"
             action="post_action"
             sequence="4"
@@ -90,7 +90,7 @@
         />
 
         <menuitem id="photo_menu"
-            name="Fotos"
+            name="Momentos OneKey"
             parent="intranet_root_menu"
             action="photo_action"
             sequence="2"
