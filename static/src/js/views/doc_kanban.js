@@ -43,7 +43,7 @@
         }),
         init: function() {
             this._super.apply(this, arguments);
-            this.loadParams.limit = 12;
+            this.loadParams.limit = 24;
         }
     });
 

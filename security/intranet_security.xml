@@ -37,7 +37,7 @@
         <record id="intranet_manager" model="res.groups">
             <field name="name">Manager</field>
             <field name="category_id" ref="intranet_management"/>
-            <field name="implied_ids" eval="[(6, 0, [ref('intranet_user'), ref('intranet_commercial'), ref('intranet_administration'), ref('intranet_operations')])]"/>
+            <field name="implied_ids" eval="[(6, 0, [ref('intranet_user')])]"/>
         </record>
 
         <record id="base.user_root" model="res.users">
