@@ -10,6 +10,7 @@ class IntranetPost(models.Model):
     _name = "oks.intranet.post"
     _inherit = "oks.intranet.document"
     _description = "Comunicado o notica de la intranet"
+    _order = "date DESC"
 
     @api.model
     def _default_category(self):
