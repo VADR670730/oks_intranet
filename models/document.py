@@ -83,10 +83,31 @@ class IntranetDocument(models.Model):
     documents = fields.Many2many(string="Documentos", comodel_name="ir.attachment")
     extensions = fields.Many2many(string="Extensiones de los archivos", readonly=True, compute=compute_extensions, store=True, comodel_name="oks.intranet.document.extension")
 
+    def _set_attachment_data(self, record):
+        for doc in record.documents:
+            doc.res_id = record.id
+        self.env.cr.commit()
+
+    def _delete_unused_attachment(self, record):
+        '''
+        Odoo only deletes attachments linked to a record when the record itself is deleted. Deleting
+        a file from the many2many binary widget won't delete the attachment. This method compares
+        the attachments linked to the record with the attachments in the documents field and removes
+        the ones that are not in the documents field.
+        '''
+        attachment_list =  self.env["ir.attachment"].search([('res_model', '=', record._name), 
+            ('res_id', '=', record.id)])
+        document_ids = record.documents.ids
+        for attachment in attachment_list:
+            if attachment.id not in document_ids:
+                attachment.unlink()
+
+
     @api.model
     def create(self, vals):
         conv_enabled = self.env["ir.config_parameter"].sudo().get_param("oks_intranet.liboffice_convert")
         res = super(IntranetDocument, self).create(vals)
+        self._set_attachment_data(res)
         if conv_enabled:
             self.env["oks.intranet.conversion"].compute_conversions({"model_name": res._name.replace(".", "_"),
                 "record_id": res.id, "documents": res.documents})
@@ -101,9 +122,11 @@ class IntranetDocument(models.Model):
         conv_enabled = self.env["ir.config_parameter"].sudo().get_param("oks_intranet.liboffice_convert")
         model_name = self._name.replace(".", "_")
         conversion = self.env["oks.intranet.conversion"]
-        res = super(IntranetDocument, self).write(vals)
+        res = super(IntranetDocument, self).write(vals)    
         if conv_enabled:
             for record in self:
+                self._set_attachment_data(record)
+                self._delete_unused_attachment(record)
                 conversion.compute_conversions({"model_name": model_name, "record_id": record.id,
                     "documents": record.documents})
         return res
